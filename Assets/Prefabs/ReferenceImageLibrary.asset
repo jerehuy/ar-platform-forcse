@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 848409ee8ba454f42a5ddff137688a27, type: 3}
+  m_Name: ReferenceImageLibrary
+  m_EditorClassIdentifier: 
+  m_GuidLow: 5377179779977131446
+  m_GuidHigh: 7076745579318112403
+  m_Images:
+  - m_SerializedGuid:
+      m_GuidLow: 5034733788616942843
+      m_GuidHigh: 12147596355602544286
+    m_SerializedTextureGuid:
+      m_GuidLow: 541622228420601838
+      m_GuidHigh: 11403637849255941947
+    m_Size: {x: 0.1, y: 0.1}
+    m_SpecifySize: 1
+    m_Name: random_image
+    m_Texture: {fileID: 2800000, guid: 0f7727ee3a8c07843b97197034dc419e, type: 3}
