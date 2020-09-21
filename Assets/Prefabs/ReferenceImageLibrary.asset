@@ -25,3 +25,13 @@ MonoBehaviour:
     m_SpecifySize: 1
     m_Name: random_image
     m_Texture: {fileID: 2800000, guid: 0f7727ee3a8c07843b97197034dc419e, type: 3}
+  - m_SerializedGuid:
+      m_GuidLow: 4767031398771277608
+      m_GuidHigh: 4990479021253919636
+    m_SerializedTextureGuid:
+      m_GuidLow: 16070037279785958332
+      m_GuidHigh: 9129023142520956057
+    m_Size: {x: 0, y: 0}
+    m_SpecifySize: 0
+    m_Name: oontoi
+    m_Texture: {fileID: 0}
