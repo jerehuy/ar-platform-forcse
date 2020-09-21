@@ -46,6 +46,16 @@ MonoBehaviour:
     m_Name: nuuskamuikkunen
     m_Texture: {fileID: 0}
   - m_SerializedGuid:
+      m_GuidLow: 5529586507906838454
+      m_GuidHigh: 11541059725738217150
+    m_SerializedTextureGuid:
+      m_GuidLow: 17241075623913437579
+      m_GuidHigh: 12439435242639220650
+    m_Size: {x: 0, y: 0}
+    m_SpecifySize: 0
+    m_Name: Lusikka
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
       m_GuidLow: 5757484158514885490
       m_GuidHigh: 840107329291291275
     m_SerializedTextureGuid:
