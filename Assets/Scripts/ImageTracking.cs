@@ -16,11 +16,13 @@ public class ImageTracking : MonoBehaviour
 
     private Dictionary<string, GameObject> spawnedPrefabs = new Dictionary<string, GameObject>();
     private ARTrackedImageManager trackedImageManager;
-    private Text imageText;
+    private Text currentImageText;
+    private Text previousImageText;
 
     private void Start()
     {
-        imageText = GameObject.Find("ImageName").GetComponent<Text>();
+        currentImageText = GameObject.Find("CurrentImageName").GetComponent<Text>();
+        previousImageText = GameObject.Find("PrevImageName").GetComponent<Text>();
     }
 
     private void Awake()
@@ -59,7 +61,7 @@ public class ImageTracking : MonoBehaviour
         foreach (ARTrackedImage trackedImage in eventArgs.removed)
         {
             spawnedPrefabs[trackedImage.name].SetActive(false);
-            imageText.text = "None";
+            currentImageText.text = "Tracking: None";
         }
     }
 
@@ -69,7 +71,8 @@ public class ImageTracking : MonoBehaviour
         Vector3 paikka = trackedImage.transform.position;
 
         GameObject prefab = spawnedPrefabs[nimi];
-        imageText.text = nimi;
+        currentImageText.text = "Tracking: " + nimi;
+        previousImageText.text = "Recognized: " + nimi;
         prefab.transform.position = paikka;
         prefab.SetActive(true);
 
