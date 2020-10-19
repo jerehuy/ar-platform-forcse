@@ -55,3 +55,113 @@ MonoBehaviour:
     m_SpecifySize: 0
     m_Name: Fight_me
     m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4866439697203851288
+      m_GuidHigh: 5329123539671152816
+    m_SerializedTextureGuid:
+      m_GuidLow: 8580672969425266356
+      m_GuidHigh: 2184240394324322761
+    m_Size: {x: 0, y: 0}
+    m_SpecifySize: 0
+    m_Name: aslan2
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5573417167781459137
+      m_GuidHigh: 1631623832434390926
+    m_SerializedTextureGuid:
+      m_GuidLow: 775792041535673563
+      m_GuidHigh: 8091498702964268154
+    m_Size: {x: 0, y: 0}
+    m_SpecifySize: 0
+    m_Name: gameboy
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5010517513713374856
+      m_GuidHigh: 14726613878551583642
+    m_SerializedTextureGuid:
+      m_GuidLow: 8112291175321156082
+      m_GuidHigh: 12882478007276766856
+    m_Size: {x: 0, y: 0}
+    m_SpecifySize: 0
+    m_Name: gameboy2
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5316191810714645709
+      m_GuidHigh: 17645866535041943225
+    m_SerializedTextureGuid:
+      m_GuidLow: 6504484331526974069
+      m_GuidHigh: 17500041396962960938
+    m_Size: {x: 0, y: 0}
+    m_SpecifySize: 0
+    m_Name: kirja
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4867053131323820238
+      m_GuidHigh: 5042664272306931610
+    m_SerializedTextureGuid:
+      m_GuidLow: 1613600707844168025
+      m_GuidHigh: 1478690486271782297
+    m_Size: {x: 0, y: 0}
+    m_SpecifySize: 0
+    m_Name: kirja2
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4619212208178685982
+      m_GuidHigh: 15753703013253085593
+    m_SerializedTextureGuid:
+      m_GuidLow: 3361075361285659978
+      m_GuidHigh: 13832944342470034857
+    m_Size: {x: 0, y: 0}
+    m_SpecifySize: 0
+    m_Name: laturi
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4720841461337890946
+      m_GuidHigh: 17941539416073542327
+    m_SerializedTextureGuid:
+      m_GuidLow: 1010116667312370082
+      m_GuidHigh: 8573917608547310843
+    m_Size: {x: 0, y: 0}
+    m_SpecifySize: 0
+    m_Name: laturi2
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5071098424601384625
+      m_GuidHigh: 8126727759075345840
+    m_SerializedTextureGuid:
+      m_GuidLow: 18011243849066203573
+      m_GuidHigh: 6076598300433408185
+    m_Size: {x: 0, y: 0}
+    m_SpecifySize: 0
+    m_Name: pahkasika
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4703109206196861152
+      m_GuidHigh: 16162096289001207217
+    m_SerializedTextureGuid:
+      m_GuidLow: 14075124972261710831
+      m_GuidHigh: 8787972065057324603
+    m_Size: {x: 0, y: 0}
+    m_SpecifySize: 0
+    m_Name: pahkasika2
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4622923573979425330
+      m_GuidHigh: 9196129170122680964
+    m_SerializedTextureGuid:
+      m_GuidLow: 14539002859693271434
+      m_GuidHigh: 15269198254592237561
+    m_Size: {x: 0, y: 0}
+    m_SpecifySize: 0
+    m_Name: sotilas2
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5490869577283329711
+      m_GuidHigh: 12286289871842158977
+    m_SerializedTextureGuid:
+      m_GuidLow: 14020964552219928603
+      m_GuidHigh: 16641999207140275722
+    m_Size: {x: 0, y: 0}
+    m_SpecifySize: 0
+    m_Name: sotilas2
+    m_Texture: {fileID: 0}
