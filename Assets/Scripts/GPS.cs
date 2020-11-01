@@ -21,8 +21,9 @@ public class GPS : MonoBehaviour
     {
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        StartCoroutine(StartLocationService());  
-        
+        StartCoroutine(StartLocationService());
+
+        //ResourceManager.GetGPSObjects();
     }
 
     private IEnumerator StartLocationService()
