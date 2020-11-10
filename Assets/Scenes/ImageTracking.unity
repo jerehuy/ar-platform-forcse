@@ -754,11 +754,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1023804161}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df33161e5023fc8418f42db3483d7943, type: 3}
+  m_Script: {fileID: 11500000, guid: a5839590d9f729d48a2cec2b487fd92a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coordinates: {fileID: 1623952909}
-  situation: {fileID: 539903541}
+  latitude: 0
+  longitude: 0
+  distance: 0
+  time: 
+  status: 
+  flag: 0
 --- !u!114 &1023804168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -768,14 +772,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1023804161}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15783c54182944e4ab60ef0f06d21c13, type: 3}
+  m_Script: {fileID: 11500000, guid: b08edb8a050a845428d75ee7f05c556d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  latitude: 0
-  longitude: 0
-  etaisyys: 0
-  aika: 
-  tilanne: 
+  coordinates: {fileID: 1623952909}
+  situation: {fileID: 539903541}
 --- !u!1 &1147988012
 GameObject:
   m_ObjectHideFlags: 0
@@ -930,7 +931,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 1000, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1623952909
 MonoBehaviour:
