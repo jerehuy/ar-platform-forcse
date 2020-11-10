@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+    Arttu Lehtola
+*/
+
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,20 +14,29 @@ public class GPS : MonoBehaviour
     public static GPS Instance { set; get; }
     public float latitude;
     public float longitude;
-    public double etaisyys;
-    public String aika;
-    public string tilanne;
+    public double distance;
+    public String time;
+    public string status;
     LocationService palvelin = Input.location;
-
-    
+    // Luodaan testilista olioille
+    public List<Coords> CoordsList = new List<Coords>();
+    public bool flag = false;
 
     // Start is called before the first frame update
     void Start()
     {
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        StartCoroutine(StartLocationService());  
-        
+        StartCoroutine(StartLocationService());
+        // SYÖTETÄÄN LISTAAN OLIOITA (testitarkoituksessa)
+        // ID, LAT, LON, MP3, RADIUS
+        CoordsList.Add(new Coords(1, 25f, 35f, "audio1", 5));
+        CoordsList.Add(new Coords(2, 45f, 55f, "audio1", 5));
+        CoordsList.Add(new Coords(3, 65f, 75f, "audio1", 5));
+        CoordsList.Add(new Coords(4, 85f, 95f, "audio1", 5));
+        // Testi
+        CoordsList.Add(new Coords(5, 61.494306f, 23.811462f, "audio1", 15));
+
     }
 
     private IEnumerator StartLocationService()
@@ -30,7 +44,7 @@ public class GPS : MonoBehaviour
         if (!Input.location.isEnabledByUser)
         {
             UnityEngine.Debug.Log("GPS has not been enabled by the user");
-            tilanne += "GPS has not been enabled by the user\n";
+            status += "GPS has not been enabled by the user\n";
             yield break;
         }
 
@@ -45,79 +59,98 @@ public class GPS : MonoBehaviour
         if (maxWait <= 0)
         {
             UnityEngine.Debug.Log("Timeout");
-            tilanne = "Timeout\n";
+            status = "Timeout\n";
             yield break;
         }
 
         if (palvelin.status == LocationServiceStatus.Failed)
         {
             UnityEngine.Debug.Log("Unable to determine device's location");
-            tilanne = "Unable to determine device's location\n";
+            status = "Unable to determine device's location\n";
             yield break;
         }
         else
         {
             latitude = palvelin.lastData.latitude;
             longitude = palvelin.lastData.longitude;
-            aika = System.DateTime.Now.ToString();
+            time = System.DateTime.Now.ToString();
             yield break;
         }
-
     }
 
-    void Sijainti()
+    void Location()
     {
         if (palvelin.status != LocationServiceStatus.Failed)
         {
             // Nouda uusimmat arvot
             latitude = palvelin.lastData.latitude;
             longitude = palvelin.lastData.longitude;
-            aika = System.DateTime.Now.ToString();
+            time = System.DateTime.Now.ToString();
         }
         else
         {
-            tilanne = "Laitteen sijaintia ei voida päätellä.\n";
+            status = "Laitteen sijaintia ei voida päätellä.\n";
         }
     }
-    
-    void Kytkin()
+
+    double Distance(float Lat, float Lon)
     {
-        if (etaisyys <= 5 && etaisyys != 0)
-        {
-            AudioSource audio = gameObject.AddComponent<AudioSource>();
-            audio.PlayOneShot((AudioClip)Resources.Load("audio1"));
-            //UnityEngine.Debug.Log("ETÄISYYS: " + etaisyys);
-        }
-        /*else
-        {
-            UnityEngine.Debug.Log("En päässy!");
-        }*/
-    }
-    
-    // Update is called once per frame
-    void Update()
-    {
-        // Päivitetään sijaintitiedot
-        Sijainti();
-        Kytkin();
-        // S-marketin edustan koordinaatit (syötä tähän mitkä tahansa haluamasi koordinaatit)
-        double latitudeDest = 61.494306;
-        double longitudeDest = 23.811462;
-        // Vakioiden ja muutujien konversiota radiaaneiksi
-        // Laskemme haversinen kaavalla etäisyytemme kohdekoordinaateista
-        double havR = 6371e3; // metriä
-        double latYk = latitude * Math.PI / 180;
-        double latKa = latitudeDest * Math.PI / 180;
-        // Lasketaan erotus
+        // Etäisyyden laskeminen haversinen kaavalla
+        double latitudeDest = Lat;
+        double longitudeDest = Lon;
+        double havR = 6371e3;
+        double lat1 = latitude * Math.PI / 180;
+        double lat2 = latitudeDest * Math.PI / 180;
         double latDe = (latitudeDest - latitude) * Math.PI / 180;
         double lonDe = (longitudeDest - longitude) * Math.PI / 180;
         double havA = Math.Sin(latDe / 2) * Math.Sin(latDe / 2) +
-                        Math.Cos(latYk) * Math.Cos(latKa) *
-                        Math.Sin(lonDe / 2) * Math.Sin(lonDe / 2);
-        //Vaihtoehtoinen tapa laskea c: double havC = 2 * Math.Atan2(Math.Sqrt(havA), Math.Sqrt(1 - havA));
-        double havC = 2 * Math.Asin(Math.Min(1,Math.Sqrt(havA)));
-        etaisyys = (havR * havC);
-        tilanne = "Etäisyys: " + etaisyys.ToString() + " meters.\n" + "Aikaleima: " + aika;
+                    Math.Cos(lat1) * Math.Cos(lat2) *
+                    Math.Sin(lonDe / 2) * Math.Sin(lonDe / 2);
+        double havC = 2 * Math.Asin(Math.Min(1, Math.Sqrt(havA)));
+        // Palautetaan etäisyys (metreinä)
+        UnityEngine.Debug.Log("("+Lat+"|"+Lon+") PALAUTUS: " + (havR * havC));
+        return (havR * havC);
+    }
+
+    //IEnumerable<Coords> CoordsList
+    void Check()
+    {
+        foreach (var corObject in CoordsList)
+        {
+            if (Distance(corObject.Latitude, corObject.Longitude) != 0
+                && Distance(corObject.Latitude, corObject.Longitude) <= corObject.Radius)
+            {
+                AudioSource audio = gameObject.AddComponent<AudioSource>();
+                audio.PlayOneShot((AudioClip)Resources.Load(corObject.Audio));
+                flag = true;
+            }
+        }
+        
+    }
+    
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+        // Päivitetään sijaintitiedot
+        Location();
+        // Tarkista koordinaattien etäisyys
+        Check();
+        
+        
+
+        // S-marketin edustan koordinaatit (syötä tähän mitkä tahansa haluamasi koordinaatit)
+        if (flag == false) {
+            status = /*"Etäisyys: " + distance.ToString() + " meters.\n" +*/ "Aikaleima: " + time;
+        }
+        else
+        {
+            status = "Pääsimme perille!";
+        }
+        
+
+        
         
     }
 }

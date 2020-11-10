@@ -1,4 +1,8 @@
-﻿using System.Collections;
+﻿/*
+    Arttu Lehtola
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +16,6 @@ public class UpdateGPSText : MonoBehaviour
     {
         coordinates.text = "Lat:" + GPS.Instance.latitude.ToString() + "\nLong:" + GPS.Instance.longitude.ToString();
 
-        situation.text = "Status:\n" + GPS.Instance.tilanne;
+        situation.text = "Status:\n" + GPS.Instance.status;
     }
 }
