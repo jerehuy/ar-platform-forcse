@@ -2,17 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Globalization;
 
 public static class ResourceManager
 {
   [Serializable]
   private class GPSData
   {
+    public int id = 0;
     public string latitude = "";
     public string longitude = "";
-    public string description = "";
     public string filename = "";
+    public string radius = "";
   }
+
+// ID, LAT, LON, MP3, RADIUS
 
   [Serializable]
   private class ImageData
@@ -21,14 +25,26 @@ public static class ResourceManager
     public string filename = "";
   }
 
-  public static bool GetGPSObjects() {
+  public static List<Coords> GetGPSObjects() {
+
+    NumberFormatInfo format = new CultureInfo("en-US").NumberFormat;
+
     string data = Resources.Load<TextAsset>("gps_data").ToString();
     GPSData[] gpsList = JsonHelper.FromJson<GPSData>(data);
     
+    List<Coords> CoordsList = new List<Coords>();
     foreach (GPSData gps in gpsList) {
-      Debug.Log("filename: " + gps.filename + ", description: " + gps.description + ", latitude: " + gps.latitude + ", longitude: " + gps.longitude);
+      
+      int newId = gps.id;
+      float newLatitude = float.Parse(gps.latitude, format);
+      float newLongitude = float.Parse(gps.longitude, format);
+      string newFilename = gps.filename;
+      float newRadius = float.Parse(gps.radius, format);
+
+      CoordsList.Add(new Coords(newId, newLatitude, newLongitude,newFilename, newRadius));
+      //Debug.Log("GPS(" + newId + ", " + newLatitude + ", " + newLongitude + ", " + newFilename + ", " + newRadius + ")");
     }
-    return true;
+    return CoordsList;
   }
 
   public static bool GetImageTrackingObjects() {
