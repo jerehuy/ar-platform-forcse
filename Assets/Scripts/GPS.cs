@@ -28,6 +28,7 @@ public class GPS : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         StartCoroutine(StartLocationService());
+<<<<<<< HEAD
         // SYÖTETÄÄN LISTAAN OLIOITA (testitarkoituksessa)
         // ID, LAT, LON, MP3, RADIUS
         CoordsList.Add(new Coords(1, 25f, 35f, "audio1", 5));
@@ -37,6 +38,10 @@ public class GPS : MonoBehaviour
         // Testi
         CoordsList.Add(new Coords(5, 61.494306f, 23.811462f, "audio1", 15));
 
+=======
+
+        //ResourceManager.GetGPSObjects();
+>>>>>>> a4fa84453dc96fa345d054debf9bb099d7b64f27
     }
 
     private IEnumerator StartLocationService()
