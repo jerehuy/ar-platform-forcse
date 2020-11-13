@@ -7,17 +7,17 @@ public class Images
 {
     //Variables
     private int id;
-    private String text;
-    private String audio;
-    private String picture;
+    private string text;
+    private string audio;
+    private string picture;
 
     //Builder
-    public Images (int pID, String pText, String pAudio, String pPicture)
+    public Images (int pID, string pText, string pAudio, string pPicture)
     {
         id = pID;
         text = pText;
         audio = pAudio;
-        picture = pPicture
+        picture = pPicture;
     }
 
     //Accessors
@@ -30,21 +30,21 @@ public class Images
     }
 
     //Text
-    public String Text
+    public string Text
     {
         get { return text; }
         set { text = value; }
     }
 
     //Audio
-    public String Audio
+    public string Audio
     {
         get { return audio; }
         set { audio = value; }
     }
 
     //Picture
-    public String Picture
+    public string Picture
     {
         get { return picture; }
         set { picture = value; }
