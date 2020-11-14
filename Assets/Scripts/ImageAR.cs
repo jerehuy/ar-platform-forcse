@@ -3,18 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Images
+public class ImageAR
 {
     //Variables
     private int id;
+    private string trackedImage;
     private string text;
     private string audio;
     private string picture;
 
     //Builder
-    public Images (int pID, string pText, string pAudio, string pPicture)
+    public ImageAR (int pID, string pTrackedImage, string pText, string pAudio, string pPicture)
     {
         id = pID;
+        trackedImage = pTrackedImage;
         text = pText;
         audio = pAudio;
         picture = pPicture;
@@ -27,6 +29,11 @@ public class Images
     {
         get { return id; }
         set { id = value; }
+    }
+
+    public string TrackedImage
+    {
+        get { return trackedImage; }
     }
 
     //Text
