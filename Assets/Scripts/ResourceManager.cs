@@ -9,11 +9,13 @@ public static class ResourceManager
   [Serializable]
   private class GPSData
   {
-    public int id = 0;
+    public string id = "";
     public string latitude = "";
     public string longitude = "";
     public string audioName = "";
     public string radius = "";
+    public string activation = "";
+    public string deactivation = "";
   }
 
 // ID, LAT, LON, MP3, RADIUS
@@ -21,7 +23,7 @@ public static class ResourceManager
   [Serializable]
   private class ImageData
   {
-    public int id = 0;
+    public string id = "";
     public string trackedImageName = "";
     public string text = "";
     public string audioName = "";
@@ -38,14 +40,16 @@ public static class ResourceManager
     List<Coords> coordsList = new List<Coords>();
     foreach (GPSData gps in gpsData) {
       
-      int newId = gps.id;
+      string newId = gps.id;
       float newLatitude = float.Parse(gps.latitude, format);
       float newLongitude = float.Parse(gps.longitude, format);
       string newAudio = gps.audioName;
       float newRadius = float.Parse(gps.radius, format);
+      float newActivation = float.Parse(gps.activation, format);
+      float newDeactivation = float.Parse(gps.deactivation, format);
 
-      coordsList.Add(new Coords(newId, newLatitude, newLongitude, newAudio, newRadius));
-      //Debug.Log("GPS(" + newId + ", " + newLatitude + ", " + newLongitude + ", " + newAudioName + ", " + newRadius + ")");
+      coordsList.Add(new Coords(newId, newLatitude, newLongitude, newAudio, newRadius /*,newActivation, newDeactivation */));
+      //Debug.Log("GPS(" + newId + ", " + newLatitude + ", " + newLongitude + ", " + newAudio + ", " + newRadius + ", " + newActivation + ", " + newDeactivation + ")");
     }
     return coordsList;
   }
@@ -58,7 +62,7 @@ public static class ResourceManager
     List<ImageAR> imagesList = new List<ImageAR>();
     foreach (ImageData image in imageData) {
       
-      int newId = image.id;
+      string newId = image.id;
       string newTrackedImage = image.trackedImageName;
       string newText = image.text;
       string newAudio = image.audioName;

@@ -6,14 +6,14 @@ using UnityEngine;
 public class ImageAR
 {
     //Variables
-    private int id;
+    private string id;
     private string trackedImage;
     private string text;
     private string audio;
     private string picture;
 
     //Builder
-    public ImageAR (int pID, string pTrackedImage, string pText, string pAudio, string pPicture)
+    public ImageAR (string pID, string pTrackedImage, string pText, string pAudio, string pPicture)
     {
         id = pID;
         trackedImage = pTrackedImage;
@@ -25,7 +25,7 @@ public class ImageAR
     //Accessors
     
     //ID
-    public int ID
+    public string ID
     {
         get { return id; }
         set { id = value; }
