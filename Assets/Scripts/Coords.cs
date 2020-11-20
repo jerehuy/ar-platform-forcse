@@ -11,25 +11,27 @@ using UnityEngine;
 public class Coords
 {
     // Muuttujat
-    private string id;
+    private int id;
     private float dLatitude;
     private float dLongitude;
     private float radius;
     private String audio;
+    private int wait;
 
     // Rakentaja
-    public Coords (string pID, float pLat, float pLon, String pAudio, float pRadi = 5)
+    public Coords (int pID, float pLat, float pLon, String pAudio, float pRadi = 5, int pWait = 5)
     {
         id = pID;
         dLatitude = pLat;
         dLongitude = pLon;
         radius = pRadi;
         audio = pAudio;
+        wait = pWait;
     }
 
     // Aksessorit
     // ID
-    public string ID
+    public int ID
     {
         get { return id; }
         set { id = value; }
@@ -46,16 +48,22 @@ public class Coords
         get { return dLongitude;    }
         set { dLongitude = value;   }
     }
-    // Sï¿½de
+    // Säde
     public float Radius
     {
         get { return radius; }
         set { radius = value; }
     }
-    // Audiopï¿½tkï¿½
+    // Audiopätkä
     public String Audio
     {
         get { return audio; }
         set { audio = value; }
+    }
+    // Odotusaika
+    public int Wait
+    {
+        get { return wait; }
+        set { wait = value; }
     }
 }
