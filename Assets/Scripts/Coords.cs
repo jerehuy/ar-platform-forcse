@@ -16,15 +16,17 @@ public class Coords
     private float dLongitude;
     private float radius;
     private String audio;
+    private float wait;
 
     // Rakentaja
-    public Coords (string pID, float pLat, float pLon, String pAudio, float pRadi = 5)
+    public Coords (string pID, float pLat, float pLon, String pAudio, float pRadi = 5, float pWait = 5)
     {
         id = pID;
         dLatitude = pLat;
         dLongitude = pLon;
         radius = pRadi;
         audio = pAudio;
+        wait = pWait;
     }
 
     // Aksessorit
@@ -57,5 +59,11 @@ public class Coords
     {
         get { return audio; }
         set { audio = value; }
+    }
+    // Odotusaika
+    public float Wait
+    {
+        get { return wait; }
+        set { wait = value; }
     }
 }
