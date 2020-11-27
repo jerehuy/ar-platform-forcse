@@ -367,17 +367,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a610d8ff3b8b6b249ab47ff2deba086a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placeablePrefabs:
-  - {fileID: 7052901233199192654, guid: e51b6bd4a8cae334aae46efe96c69194, type: 3}
-  - {fileID: 2452513637612993142, guid: a633862ed36176a4e9c75f88bbced6b5, type: 3}
-  - {fileID: 2452513637612993142, guid: c46f935d0229c184a9356779570de734, type: 3}
-  - {fileID: 3751648034041550220, guid: 8339a069fd9184d45ab633e6c9a07517, type: 3}
-  - {fileID: 2452513637612993142, guid: 9a5324170270422409471d715b787e3f, type: 3}
-  - {fileID: 7052901233199192654, guid: 1613428f5d07c734a9e292f16ca27ef5, type: 3}
-  - {fileID: 2452513637612993142, guid: 085e9b576b3cb6340a70374ad3bc2091, type: 3}
-  - {fileID: 7052901233199192654, guid: 8fd795a3b81030a48a64591d05fa4f14, type: 3}
-  - {fileID: 7052901233199192654, guid: a6df2fa73169461479910dce4fb968d6, type: 3}
-  - {fileID: 7052901233199192654, guid: 2a7ab3faa8a85dc4f82221dcbd2ac021, type: 3}
 --- !u!1 &539903539
 GameObject:
   m_ObjectHideFlags: 0
@@ -1266,8 +1255,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b08edb8a050a845428d75ee7f05c556d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coordinates: {fileID: 1623952909}
-  situation: {fileID: 539903541}
+  coordinates: {fileID: 0}
+  situation: {fileID: 0}
 --- !u!1 &1147988012
 GameObject:
   m_ObjectHideFlags: 0
@@ -1647,8 +1636,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tabButtons: []
-  tabIdle: {r: 1, g: 1, b: 1, a: 1}
-  tabActive: {r: 0.4245283, g: 0.4245283, b: 0.4245283, a: 1}
+  tabIdle: {r: 0.9811321, g: 0.9811321, b: 0.9811321, a: 0}
+  tabActive: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 0}
   selectedTab: {fileID: 0}
   objectsToSwap:
   - {fileID: 1624437940}
