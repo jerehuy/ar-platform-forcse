@@ -376,7 +376,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 520104850}
         m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: ResetTrack
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -579,7 +579,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -677,6 +677,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioClips:
   - {fileID: 8300000, guid: 857ab693ea080c9449e8874c7fde3c70, type: 3}
+  clipTimeText: {fileID: 444360749}
 --- !u!4 &520104851
 Transform:
   m_ObjectHideFlags: 0
@@ -2045,7 +2046,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1465530675
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2111,7 +2112,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 520104850}
         m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-        m_MethodName: StopMusic
+        m_MethodName: PauseAudio
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3001,7 +3002,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 520104850}
         m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-        m_MethodName: PlayMusic
+        m_MethodName: PlayAudio
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

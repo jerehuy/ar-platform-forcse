@@ -5,63 +5,83 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
-// Kovakoodattu audiomanageri!!! Täytyy muokata rajusti
-
 [RequireComponent(typeof(AudioSource))]
 public class AudioManager : MonoBehaviour
 {
     public AudioClip[] audioClips;
-    private int currentClip;
     private AudioSource source;
+
+    public Text clipTimeText;
+
+    private int fullLength;
+    private int playTime;
+    private int seconds;
+    private int minutes;
+
+    private GameObject playButton;
+    private GameObject pauseButton;
 
     void Start ()
     {
+        playButton = GameObject.Find("PlayButton");
+        pauseButton = GameObject.Find("PauseButton");
+
+        pauseButton.SetActive(false);
+
         source = GetComponent<AudioSource>();
     }
 
-    public void PlayMusic()
+    public void PlayAudio()
     {
-        if(source.isPlaying)
+        /*if(source.isPlaying)
         {
             return;
-        }
+        }*/
 
-        currentClip--;
-        if (currentClip < 0)
-        {
-            currentClip = audioClips.Length - 1;
-        }
+        source.clip = audioClips[0];
+        fullLength = (int)source.clip.length;
+        source.Play();
 
-        StartCoroutine(WaitForMusicEnd());
+        StartCoroutine("WaitForAudioEnd");
+
+        playButton.SetActive(false);
+        pauseButton.SetActive(true);
     }
 
-    IEnumerator WaitForMusicEnd()
+    IEnumerator WaitForAudioEnd()
     {
         while (source.isPlaying)
         {
+            playTime = (int)source.time;
+            ShowPlayTime();
             yield return null;
         }
-        NextClip();
+
+        pauseButton.SetActive(false);
+        playButton.SetActive(true);
     }
 
-    public void NextClip()
+    public void PauseAudio()
     {
-        source.Stop();
-        currentClip++;
+        source.Pause();
+        StopCoroutine("WaitForAudioEnd");
 
-        if (currentClip > audioClips.Length - 1)
-        {
-            currentClip = 0;
-        }
-        source.clip = audioClips[currentClip];
-        source.Play();
-
-        StartCoroutine(WaitForMusicEnd());
+        pauseButton.SetActive(false);
+        playButton.SetActive(true);
     }
 
-    public void StopMusic()
+    public void ResetTrack()
     {
-        StopCoroutine("WaitForMusicEnd");
         source.Stop();
+        StopCoroutine("WaitForAudioEnd");
+
+        PlayAudio();
+    }
+
+    void ShowPlayTime()
+    {
+        seconds = playTime % 60;
+        minutes = (playTime / 60) % 60;
+        clipTimeText.text = minutes + ":" + seconds.ToString("D2") + "/" + ((fullLength / 60) % 60 + ":" + (fullLength % 60).ToString("D2"));
     }
 }
