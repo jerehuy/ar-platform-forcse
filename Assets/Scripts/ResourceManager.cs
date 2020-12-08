@@ -9,11 +9,13 @@ public static class ResourceManager
   [Serializable]
   private class GPSData
   {
-    public int id = 0;
+    public string id = "";
     public string latitude = "";
     public string longitude = "";
-    public string filename = "";
+    public string audioName = "";
     public string radius = "";
+    public string activation = "";
+    public string deactivation = "";
   }
 
 // ID, LAT, LON, MP3, RADIUS
@@ -21,8 +23,11 @@ public static class ResourceManager
   [Serializable]
   private class ImageData
   {
-    public string description = "";
-    public string filename = "";
+    public string id = "";
+    public string trackedImageName = "";
+    public string text = "";
+    public string audioName = "";
+    public string pictureName = "";
   }
 
   public static List<Coords> GetGPSObjects() {
@@ -30,26 +35,44 @@ public static class ResourceManager
     NumberFormatInfo format = new CultureInfo("en-US").NumberFormat;
 
     string data = Resources.Load<TextAsset>("gps_data").ToString();
-    GPSData[] gpsList = JsonHelper.FromJson<GPSData>(data);
+    GPSData[] gpsData = JsonHelper.FromJson<GPSData>(data);
     
-    List<Coords> CoordsList = new List<Coords>();
-    foreach (GPSData gps in gpsList) {
+    List<Coords> coordsList = new List<Coords>();
+    foreach (GPSData gps in gpsData) {
       
-      int newId = gps.id;
+      string newId = gps.id;
       float newLatitude = float.Parse(gps.latitude, format);
       float newLongitude = float.Parse(gps.longitude, format);
-      string newFilename = gps.filename;
+      string newAudio = gps.audioName;
       float newRadius = float.Parse(gps.radius, format);
+      float newActivation = float.Parse(gps.activation, format);
+      float newDeactivation = float.Parse(gps.deactivation, format);
 
-      CoordsList.Add(new Coords(newId, newLatitude, newLongitude,newFilename, newRadius));
-      //Debug.Log("GPS(" + newId + ", " + newLatitude + ", " + newLongitude + ", " + newFilename + ", " + newRadius + ")");
+      coordsList.Add(new Coords(newId, newLatitude, newLongitude, newAudio, newRadius /*,newActivation, newDeactivation */));
+      //Debug.Log("GPS(" + newId + ", " + newLatitude + ", " + newLongitude + ", " + newAudio + ", " + newRadius + ", " + newActivation + ", " + newDeactivation + ")");
     }
-    return CoordsList;
+    return coordsList;
   }
 
-  public static bool GetImageTrackingObjects() {
-    var data = Resources.Load<TextAsset>("image_data");
+  public static bool  GetImageTrackingObjects() {
+        //List<ImageAR>
 
-    return true;
+        string data = Resources.Load<TextAsset>("image_data").ToString();
+    ImageData[] imageData = JsonHelper.FromJson<ImageData>(data);
+    
+    List<ImageAR> imagesList = new List<ImageAR>();
+    foreach (ImageData image in imageData) {
+      
+      string newId = image.id;
+      string newTrackedImage = image.trackedImageName;
+      string newText = image.text;
+      string newAudio = image.audioName;
+      string newPicture = image.pictureName;
+
+      imagesList.Add(new ImageAR(newId, newTrackedImage, newText, newAudio, newPicture));
+      //Debug.Log("ImageAR(" + newId + ", " + newTrackedImage + ", " + newText + ", " + newAudio + ", " + newPicture + ")");
+    }
+
+    return true; //List<ImageAR>
   }
 }

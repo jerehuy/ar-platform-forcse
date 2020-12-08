@@ -1,41 +1,104 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.XR;
 using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
 using UnityEngine.UI;
-using System.Globalization;
+
+
 
 [RequireComponent(typeof(ARTrackedImageManager))]
 public class ImageTracking : MonoBehaviour
 {
 
     [SerializeField]
-    private GameObject[] placeablePrefabs;
+    XRReferenceImageLibrary runtimeImageLibrary;
 
-    private Dictionary<string, GameObject> spawnedPrefabs = new Dictionary<string, GameObject>();
-    private ARTrackedImageManager trackedImageManager;
+    [SerializeField]
+    XRReferenceImageLibrary secondLibrary = null;
+
+    [SerializeField]
+    private Button addPicture;
+
+    [SerializeField]
+    private Button changeLibraryButton;
+
+    MutableRuntimeReferenceImageLibrary mutableRuntimeReferenceImageLibrary;
+    private ARTrackedImageManager trackedImageManager = null;
     private Text currentImageText;
     private Text previousImageText;
+    private Button captureImage;
+    string name = "";
+    int counter = 0;
+    int buttonCounter = 0;
+    int pictureCounter = 0;
+
+    /* 
+    * Method for changing the referenceImageLibrary.
+    * This method creates a runtime referenceImageLibrary, and changes to it.
+    * If button is pressed again, this method does nothing.
+    */
+    public string changeLibrary()
+    {
+        var lib = secondLibrary;
+        trackedImageManager.referenceLibrary = trackedImageManager.CreateRuntimeLibrary(lib);
+        trackedImageManager.enabled = true;
+        previousImageText.text = "Library cleared";
+        counter = 0;
+        pictureCounter = 0;
+        runtimeImageLibrary = null;
+        mutableRuntimeReferenceImageLibrary = null;
+        string empty = "";
+        return empty;
+    }
+
+    /* 
+    * Method for taking and adding pictures to runtime referenceImageLibrary.
+    * This method creates a picture, and adds it toruntime referenceImageLibrary.
+    */
+    private IEnumerator CaptureImage()
+    {
+
+        pictureCounter++;
+        string PictureName = "Picture: " + pictureCounter;
+
+        yield return new WaitForEndOfFrame();
+
+        var texture = ScreenCapture.CaptureScreenshotAsTexture();
+
+        var texture2d = texture as Texture2D;
+
+        previousImageText.text = "Image Taken";
+
+        mutableRuntimeReferenceImageLibrary = trackedImageManager.referenceLibrary as MutableRuntimeReferenceImageLibrary;
+
+        Unity.Jobs.JobHandle jobHandle = mutableRuntimeReferenceImageLibrary.ScheduleAddImageJob(texture2d, PictureName, 0.2f);
+        jobHandle.Complete();
+
+        previousImageText.text = "Lib count: " + mutableRuntimeReferenceImageLibrary.count;
+        currentImageText.text = "Texture count: " + mutableRuntimeReferenceImageLibrary.supportedTextureFormatCount;
+
+        trackedImageManager.referenceLibrary = mutableRuntimeReferenceImageLibrary;
+        trackedImageManager.enabled = true;
+
+    }
 
     private void Start()
     {
         currentImageText = GameObject.Find("CurrentImageName").GetComponent<Text>();
         previousImageText = GameObject.Find("PrevImageName").GetComponent<Text>();
+
+        addPicture.onClick.AddListener(() => StartCoroutine(CaptureImage()));
+
+        changeLibraryButton.onClick.AddListener(() => StartCoroutine(changeLibrary()));
     }
 
     private void Awake()
     {
         trackedImageManager = FindObjectOfType<ARTrackedImageManager>();
-
-        foreach(GameObject prefab in placeablePrefabs)
-        {
-            GameObject uusiPrefab = Instantiate(prefab, Vector3.zero, Quaternion.identity);
-            uusiPrefab.name = prefab.name;
-            spawnedPrefabs.Add(prefab.name, uusiPrefab);
-            uusiPrefab.SetActive(false);
-        }
     }
 
     private void OnEnable()
@@ -56,32 +119,24 @@ public class ImageTracking : MonoBehaviour
         }
         foreach (ARTrackedImage trackedImage in eventArgs.updated)
         {
-            UpdateImage(trackedImage);
+            if (trackedImage.referenceImage.name != name)
+            {
+                counter++;
+                UpdateImage(trackedImage);
+            }
         }
         foreach (ARTrackedImage trackedImage in eventArgs.removed)
         {
-            spawnedPrefabs[trackedImage.name].SetActive(false);
             currentImageText.text = "Tracking: None";
         }
     }
 
     private void UpdateImage(ARTrackedImage trackedImage)
     {
-        string nimi = trackedImage.referenceImage.name;
-        Vector3 paikka = trackedImage.transform.position;
 
-        GameObject prefab = spawnedPrefabs[nimi];
-        currentImageText.text = "Tracking: " + nimi;
-        previousImageText.text = "Recognized: " + nimi;
-        prefab.transform.position = paikka;
-        prefab.SetActive(true);
+        name = trackedImage.referenceImage.name;
+        currentImageText.text = "Tracked:" + name;
+        previousImageText.text = "Counter: " + counter;
 
-        foreach(GameObject go in spawnedPrefabs.Values)
-        {
-            if(go.name != nimi)
-            {
-                go.SetActive(false);
-            }
-        }
     }
 }

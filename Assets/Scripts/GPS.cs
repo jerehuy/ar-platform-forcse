@@ -28,7 +28,8 @@ public class GPS : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         StartCoroutine(StartLocationService());
-        CoordsList = ResourceManager.GetGPSObjects();
+
+        //ResourceManager.GetGPSObjects();
     }
 
     private IEnumerator StartLocationService()
@@ -105,21 +106,42 @@ public class GPS : MonoBehaviour
     }
 
     //IEnumerable<Coords> CoordsList
+    
     void Check()
+    
     {
+        /*
         foreach (var corObject in CoordsList)
         {
-            if (Distance(corObject.Latitude, corObject.Longitude) != 0
-                && Distance(corObject.Latitude, corObject.Longitude) <= corObject.Radius)
+            double distance = Distance(corObject.Latitude, corObject.Longitude);
+
+            if (distance != 0 && distance <= corObject.Radius)
             {
-                AudioSource audio = gameObject.AddComponent<AudioSource>();
-                audio.PlayOneShot((AudioClip)Resources.Load(corObject.Audio));
-                flag = true;
+                // Nappaamme oliosta halutun odotusajan (vakiona 5 sekuntia)
+                int wait = corObject.Wait;
+                while (wait > 0)
+                {
+                    yield return new WaitForSeconds(1);
+                    wait--;
+                }
+                
+                // Tarkistus vielä odotuksen jälkeen, että ollaanko vielä piirin sisällä
+                if (Distance(corObject.Latitude, corObject.Longitude) <= corObject.Radius) 
+                {
+                    AudioSource audio = gameObject.AddComponent<AudioSource>();
+                    audio.PlayOneShot((AudioClip)Resources.Load(corObject.Audio));
+                    
+                    //flag = true;
+                }
+
+                
             }
+            
         }
-        
+       
+        */
     }
-    
+     
 
     // Update is called once per frame
     void Update()

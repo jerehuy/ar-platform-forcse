@@ -165,3 +165,33 @@ MonoBehaviour:
     m_SpecifySize: 0
     m_Name: sotilas2
     m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5349867076419735342
+      m_GuidHigh: 17709630377814662560
+    m_SerializedTextureGuid:
+      m_GuidLow: 14219124476092312270
+      m_GuidHigh: 15953201564339489563
+    m_Size: {x: 0, y: 0}
+    m_SpecifySize: 0
+    m_Name: island
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5050264532445112847
+      m_GuidHigh: 2919539543775353991
+    m_SerializedTextureGuid:
+      m_GuidLow: 11778116685007139114
+      m_GuidHigh: 3850553345038004728
+    m_Size: {x: 0, y: 0}
+    m_SpecifySize: 0
+    m_Name: kissakirja
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4789254026108740839
+      m_GuidHigh: 3076181786089144219
+    m_SerializedTextureGuid:
+      m_GuidLow: 8121340771418786431
+      m_GuidHigh: 1164110760363213944
+    m_Size: {x: 0, y: 0}
+    m_SpecifySize: 0
+    m_Name: TEK_kuva
+    m_Texture: {fileID: 0}

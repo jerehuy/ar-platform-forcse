@@ -1,1 +1,1 @@
-{"Items":[{"id": 1, "latitude": "61.494075","longitude": "23.778517","filename": "audio1", "radius": "50"}, {"id": 2, "latitude": "61.449466","longitude": "23.858567","filename": "audio1", "radius": "50"}]}
+{"data":[{"id": "1", "latitude": "61.494075","longitude": "23.778517","filename": "audio1", "radius": "50", "activation": "5", "deactivation": "10"}, {"id": "2", "latitude": "61.449466","longitude": "23.858567","filename": "audio1", "radius": "50", "activation": "5", "deactivation": "10"}]}
