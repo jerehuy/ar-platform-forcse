@@ -33,11 +33,6 @@ public class AudioManager : MonoBehaviour
 
     public void PlayAudio()
     {
-        /*if(source.isPlaying)
-        {
-            return;
-        }*/
-
         source.clip = audioClips[0];
         fullLength = (int)source.clip.length;
         source.Play();
