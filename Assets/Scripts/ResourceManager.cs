@@ -54,8 +54,8 @@ public static class ResourceManager
     return coordsList;
   }
 
-  public static bool  GetImageTrackingObjects() {
-        //List<ImageAR>
+  public static List<ImageAR>  GetImageTrackingObjects() {
+        //List<ImageAR> (prevously bool) 
 
         string data = Resources.Load<TextAsset>("image_data").ToString();
     ImageData[] imageData = JsonHelper.FromJson<ImageData>(data);
@@ -73,6 +73,6 @@ public static class ResourceManager
       //Debug.Log("ImageAR(" + newId + ", " + newTrackedImage + ", " + newText + ", " + newAudio + ", " + newPicture + ")");
     }
 
-    return true; //List<ImageAR>
+    return imagesList; //ImagesList (previously true;)
   }
 }
