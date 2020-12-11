@@ -157,7 +157,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.1851111, y: 0.365}
   m_AnchorMax: {x: 0.83988893, y: 0.43958336}
-  m_AnchoredPosition: {x: -13.498993, y: 0.5722046}
+  m_AnchoredPosition: {x: -2.9655151, y: -0.57214355}
   m_SizeDelta: {x: -5.930908, y: -1.1443481}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &227907776
@@ -359,7 +359,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -0.0000038146973}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &638672556
@@ -412,7 +412,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19215688, g: 0.19215688, b: 0.19215688, a: 1}
+  m_Color: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -472,7 +472,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 12.5, y: -275}
+  m_AnchoredPosition: {x: 0.00061035156, y: -275}
   m_SizeDelta: {x: -342.1266, y: 73.41685}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &684287541
@@ -514,7 +514,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 755268433}
   m_FillRect: {fileID: 755268432}
   m_HandleRect: {fileID: 0}
   m_Direction: 0
@@ -575,7 +575,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.35967794, b: 0.8396226, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -656,7 +656,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
+  m_BlockingObjects: 3
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -725,7 +725,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1282302914}
   - component: {fileID: 1282302916}
-  - component: {fileID: 1282302915}
   m_Layer: 5
   m_Name: Camera
   m_TagString: Untagged
@@ -752,14 +751,6 @@ RectTransform:
   m_AnchoredPosition: {x: 38.466484, y: -0.052847385}
   m_SizeDelta: {x: 100.11501, y: 100.1057}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!81 &1282302915
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1282302913}
-  m_Enabled: 1
 --- !u!20 &1282302916
 Camera:
   m_ObjectHideFlags: 0

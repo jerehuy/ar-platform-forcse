@@ -16,25 +16,42 @@ public class AppManager : MonoBehaviour
     {
         instance = this;
 
+        //loadingBar = GameObject.Find("LoadingBar").GetComponent<Slider>();
+
+        StartCoroutine(LoadScene());
+    }
+
+    IEnumerator LoadScene()
+    {
         loadingScreen.gameObject.SetActive(true);
-        
+
         loadingOperation = SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
 
-        StartCoroutine(WaitForLoad());
-    }
+        yield return new WaitForSeconds(0.1f);
 
-    IEnumerator WaitForLoad()
-    {
+        loadingOperation.allowSceneActivation = false;
+
         while (!loadingOperation.isDone)
         {
+            if (loadingOperation.progress >= 0.9f)
+            {
+                
+            }
+//UnityEngine.Debug.Log("jumelis");
             yield return null;
         }
+//UnityEngine.Debug.Log("päästiin läpi");
+        yield return new WaitForSeconds(3);
 
-        loadingScreen.gameObject.SetActive(false);
+                loadingScreen.gameObject.SetActive(false);
+                loadingOperation.allowSceneActivation = true;
     }
 
-    /*void Update()
+    void Update()
     {
-        loadingBar.value = Mathf.Clamp01(loadingOperation.progress / 0.9f);
-    }*/
+        if (loadingScreen.gameObject.active)
+        {
+            loadingBar.value = Mathf.Clamp01(loadingOperation.progress / 0.9f);
+        }
+    }
 }
