@@ -88,6 +88,16 @@ public class ImageTracking : MonoBehaviour
 
     private void Start()
     {
+        StartCoroutine(WaitForUIActivation());
+    }
+
+    IEnumerator WaitForUIActivation()
+    {
+        while (!LoadingScene.mainViewActive)
+        {
+            yield return null;
+        }
+
         currentImageText = GameObject.Find("CurrentImageName").GetComponent<Text>();
         previousImageText = GameObject.Find("PrevImageName").GetComponent<Text>();
 

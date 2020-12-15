@@ -48,14 +48,13 @@ public static class ResourceManager
       float newActivation = float.Parse(gps.activation, format);
       float newDeactivation = float.Parse(gps.deactivation, format);
 
-      coordsList.Add(new Coords(newId, newLatitude, newLongitude, newAudio, newRadius /*,newActivation, newDeactivation */));
+      coordsList.Add(new Coords(newId, newLatitude, newLongitude, newAudio, newRadius ,newActivation/*, newDeactivation */));
       //Debug.Log("GPS(" + newId + ", " + newLatitude + ", " + newLongitude + ", " + newAudio + ", " + newRadius + ", " + newActivation + ", " + newDeactivation + ")");
     }
     return coordsList;
   }
 
   public static List<ImageAR>  GetImageTrackingObjects() {
-        //List<ImageAR> (prevously bool) 
 
         string data = Resources.Load<TextAsset>("image_data").ToString();
     ImageData[] imageData = JsonHelper.FromJson<ImageData>(data);
@@ -73,6 +72,6 @@ public static class ResourceManager
       //Debug.Log("ImageAR(" + newId + ", " + newTrackedImage + ", " + newText + ", " + newAudio + ", " + newPicture + ")");
     }
 
-    return imagesList; //ImagesList (previously true;)
+    return imagesList;
   }
 }

@@ -3,10 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public static class UIManager
+public class UIManager : MonoBehaviour
 {
-   public static void jotain()
-   {
 
-   }
+    public GameObject mainView;
+    public GameObject menu;
+
+    void Awake()
+    {
+        StartCoroutine(WaitForSceneToLoad());
+    }
+
+    IEnumerator WaitForSceneToLoad()
+    {
+        LoadingScene.mainViewActive = false;
+        mainView.SetActive(false);
+        menu.SetActive(false);
+
+        while (!LoadingScene.loadingReady)
+        {
+            yield return null;
+        }
+        
+        mainView.SetActive(true);
+        menu.SetActive(true);
+        LoadingScene.mainViewActive = true;
+    }
 }

@@ -18,13 +18,20 @@ public class AudioManager : MonoBehaviour
     private int seconds;
     private int minutes;
 
-    private GameObject playButton;
-    private GameObject pauseButton;
+    public GameObject playButton;
+    public GameObject pauseButton;
 
     void Start ()
     {
-        playButton = GameObject.Find("PlayButton");
-        pauseButton = GameObject.Find("PauseButton");
+        StartCoroutine(WaitForUIActivation());
+    }
+
+    IEnumerator WaitForUIActivation()
+    {
+        while (!LoadingScene.mainViewActive)
+        {
+            yield return null;
+        }
 
         pauseButton.SetActive(false);
 
