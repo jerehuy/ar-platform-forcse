@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GPS : MonoBehaviour
 {
@@ -22,21 +23,19 @@ public class GPS : MonoBehaviour
     public List<Coords> CoordsList = new List<Coords>();
     public bool flag = false;
 
+    // references to help testing by Jaakko
+    public Text lat;
+    public Text longi;
+    public Text staattus;
+
     // Start is called before the first frame update
     void Start()
     {
         Instance = this;
         DontDestroyOnLoad(gameObject);
         StartCoroutine(StartLocationService());
-        // SYÖTETÄÄN LISTAAN OLIOITA (testitarkoituksessa)
-        // ID, LAT, LON, MP3, RADIUS
-        CoordsList.Add(new Coords(1, 25f, 35f, "audio1", 5f));
-        CoordsList.Add(new Coords(2, 45f, 55f, "audio1", 5f));
-        CoordsList.Add(new Coords(3, 65f, 75f, "audio1", 5f));
-        CoordsList.Add(new Coords(4, 85f, 95f, "audio1", 5f));
-        // Testi
-        CoordsList.Add(new Coords(5, 61.494306f, 23.811462f, "audio1", 15));
 
+        CoordsList = ResourceManager.GetGPSObjects();
     }
 
     private IEnumerator StartLocationService()
@@ -122,7 +121,7 @@ public class GPS : MonoBehaviour
                 && Distance(corObject.Latitude, corObject.Longitude) <= corObject.Radius)
             {
                 
-                StartCoroutine(Waiting());
+                StartCoroutine(Waiting(corObject.Latitude, corObject.Longitude, corObject.Radius, corObject.Wait, corObject.Audio));
 
             }
 
@@ -133,7 +132,6 @@ public class GPS : MonoBehaviour
             {
                 AudioSource audio = gameObject.AddComponent<AudioSource>();
                 audio.PlayOneShot((AudioClip)Resources.Load(corObject.Audio));
-
                 //flag = true;
             }
             */
@@ -141,10 +139,9 @@ public class GPS : MonoBehaviour
         
     }
 
-    private IEnumerator Waiting(float Lat, float Lon, float Radius, float Wait)
+    private IEnumerator Waiting(float Lat, float Lon, float Radius, float Wait, string audioClip)
     {
 
-        
         float wait = Wait;
         while (wait > 0)
         {
@@ -154,9 +151,14 @@ public class GPS : MonoBehaviour
         if (Distance(Lat, Lon) <= Radius)
         {
             AudioSource audio = gameObject.AddComponent<AudioSource>();
-            audio.PlayOneShot((AudioClip)Resources.Load(corObject.Audio));
+            audio.PlayOneShot((AudioClip)Resources.Load(audioClip));
 
-            //flag = true;
+            flag = true;
+        }
+        // for testing by Jaakko
+        else
+        {
+            flag = false;
         }
 
     }
@@ -174,14 +176,17 @@ public class GPS : MonoBehaviour
 
         // S-marketin edustan koordinaatit (syötä tähän mitkä tahansa haluamasi koordinaatit)
         if (flag == false) {
-            status = /*"Etäisyys: " + distance.ToString() + " meters.\n" +*/ "Aikaleima: " + time;
+            status = /*"Etäisyys: " + distance.ToString() + " meters.\n" + "Aikaleima: " + time*/ "ei perillä";
         }
         else
         {
             status = "Pääsimme perille!";
         }
         
-
+        // for testing by Jaakko
+        lat.text = "Lat: " + latitude.ToString();
+        longi.text = "Long: " + longitude.ToString();
+        staattus.text = "Status: " + status;
         
         
     }
