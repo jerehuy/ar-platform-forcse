@@ -28,8 +28,15 @@ public class GPS : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         StartCoroutine(StartLocationService());
+        // SYÖTETÄÄN LISTAAN OLIOITA (testitarkoituksessa)
+        // ID, LAT, LON, MP3, RADIUS
+        CoordsList.Add(new Coords(1, 25f, 35f, "audio1", 5f));
+        CoordsList.Add(new Coords(2, 45f, 55f, "audio1", 5f));
+        CoordsList.Add(new Coords(3, 65f, 75f, "audio1", 5f));
+        CoordsList.Add(new Coords(4, 85f, 95f, "audio1", 5f));
+        // Testi
+        CoordsList.Add(new Coords(5, 61.494306f, 23.811462f, "audio1", 15));
 
-        //ResourceManager.GetGPSObjects();
     }
 
     private IEnumerator StartLocationService()
@@ -105,43 +112,54 @@ public class GPS : MonoBehaviour
         return (havR * havC);
     }
 
-    //IEnumerable<Coords> CoordsList
-    
     void Check()
-    
     {
-        /*
         foreach (var corObject in CoordsList)
         {
             double distance = Distance(corObject.Latitude, corObject.Longitude);
 
-            if (distance != 0 && distance <= corObject.Radius)
+            if (Distance(corObject.Latitude, corObject.Longitude) != 0
+                && Distance(corObject.Latitude, corObject.Longitude) <= corObject.Radius)
             {
-                // Nappaamme oliosta halutun odotusajan (vakiona 5 sekuntia)
-                int wait = corObject.Wait;
-                while (wait > 0)
-                {
-                    yield return new WaitForSeconds(1);
-                    wait--;
-                }
                 
-                // Tarkistus vielä odotuksen jälkeen, että ollaanko vielä piirin sisällä
-                if (Distance(corObject.Latitude, corObject.Longitude) <= corObject.Radius) 
-                {
-                    AudioSource audio = gameObject.AddComponent<AudioSource>();
-                    audio.PlayOneShot((AudioClip)Resources.Load(corObject.Audio));
-                    
-                    //flag = true;
-                }
+                StartCoroutine(Waiting());
 
-                
             }
-            
+
+
+            /*IGNORE*/
+            /*
+            if (Distance(corObject.Latitude, corObject.Longitude) <= corObject.Radius)
+            {
+                AudioSource audio = gameObject.AddComponent<AudioSource>();
+                audio.PlayOneShot((AudioClip)Resources.Load(corObject.Audio));
+
+                //flag = true;
+            }
+            */
         }
-       
-        */
+        
     }
-     
+
+    private IEnumerator Waiting(float Lat, float Lon, float Radius, float Wait)
+    {
+
+        
+        float wait = Wait;
+        while (wait > 0)
+        {
+            yield return new WaitForSeconds(1);
+            wait--;
+        }
+        if (Distance(Lat, Lon) <= Radius)
+        {
+            AudioSource audio = gameObject.AddComponent<AudioSource>();
+            audio.PlayOneShot((AudioClip)Resources.Load(corObject.Audio));
+
+            //flag = true;
+        }
+
+    }
 
     // Update is called once per frame
     void Update()
