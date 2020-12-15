@@ -10,7 +10,7 @@ using UnityEngine;
 
 public class Coords
 {
-    // Muuttujat
+    // Variables
     private string id;
     private float dLatitude;
     private float dLongitude;
@@ -18,7 +18,7 @@ public class Coords
     private String audio;
     private float wait;
 
-    // Rakentaja
+    // Constructor
     public Coords (string pID, float pLat, float pLon, String pAudio, float pRadi = 5, float pWait = 5)
     {
         id = pID;
@@ -29,38 +29,38 @@ public class Coords
         wait = pWait;
     }
 
-    // Aksessorit
+    // Accessors
     // ID
     public string ID
     {
         get { return id; }
         set { id = value; }
     }
-    // Leveysaste
+    // Latitude
     public float Latitude
     {
         get { return dLatitude;     }
         set { dLatitude = value;    }
     }
-    // Pituusaste
+    // Longitude
     public float Longitude
     {
         get { return dLongitude;    }
         set { dLongitude = value;   }
     }
-    // S�de
+    // Radius
     public float Radius
     {
         get { return radius; }
         set { radius = value; }
     }
-    // Audiop�tk�
+    // Audio clip name
     public String Audio
     {
         get { return audio; }
         set { audio = value; }
     }
-    // Odotusaika
+    // Waiting time
     public float Wait
     {
         get { return wait; }
