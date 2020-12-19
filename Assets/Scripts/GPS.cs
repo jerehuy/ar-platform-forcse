@@ -28,6 +28,8 @@ public class GPS : MonoBehaviour
     public Text longi;
     public Text staattus;
 
+    public AudioManager am;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,7 +44,7 @@ public class GPS : MonoBehaviour
     {
         if (!Input.location.isEnabledByUser)
         {
-            //UnityEngine.Debug.Log("GPS has not been enabled by the user");
+            UnityEngine.Debug.Log("GPS has not been enabled by the user");
             status += "GPS has not been enabled by the user\n";
             yield break;
         }
@@ -57,14 +59,14 @@ public class GPS : MonoBehaviour
 
         if (maxWait <= 0)
         {
-            //UnityEngine.Debug.Log("Timeout");
+            UnityEngine.Debug.Log("Timeout");
             status = "Timeout\n";
             yield break;
         }
 
         if (palvelin.status == LocationServiceStatus.Failed)
         {
-            //UnityEngine.Debug.Log("Unable to determine device's location");
+            UnityEngine.Debug.Log("Unable to determine device's location");
             status = "Unable to determine device's location\n";
             yield break;
         }
@@ -141,7 +143,6 @@ public class GPS : MonoBehaviour
 
     private IEnumerator Waiting(float Lat, float Lon, float Radius, float Wait, string audioClip)
     {
-
         float wait = Wait;
         while (wait > 0)
         {
@@ -150,8 +151,11 @@ public class GPS : MonoBehaviour
         }
         if (Distance(Lat, Lon) <= Radius)
         {
-            AudioSource audio = gameObject.AddComponent<AudioSource>();
-            audio.PlayOneShot((AudioClip)Resources.Load(audioClip));
+            //disabled automatic playing of audio
+            //AudioSource audio = gameObject.AddComponent<AudioSource>();
+            //audio.PlayOneShot((AudioClip)Resources.Load(audioClip));
+
+            am.LoadClip(audioClip);
 
             flag = true;
         }

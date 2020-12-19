@@ -8,7 +8,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(AudioSource))]
 public class AudioManager : MonoBehaviour
 {
-    public AudioClip[] audioClips;
+    private AudioClip audioClip;
     private AudioSource source;
 
     public Text clipTimeText;
@@ -40,14 +40,17 @@ public class AudioManager : MonoBehaviour
 
     public void PlayAudio()
     {
-        source.clip = audioClips[0];
-        fullLength = (int)source.clip.length;
-        source.Play();
+        if (audioClip != null)
+        {
+            source.clip = audioClip;
+            fullLength = (int)source.clip.length;
+            source.Play();
 
-        StartCoroutine("WaitForAudioEnd");
+            playButton.SetActive(false);
+            pauseButton.SetActive(true);
 
-        playButton.SetActive(false);
-        pauseButton.SetActive(true);
+            StartCoroutine("WaitForAudioEnd");
+        }
     }
 
     IEnumerator WaitForAudioEnd()
@@ -59,8 +62,8 @@ public class AudioManager : MonoBehaviour
             yield return null;
         }
 
-        pauseButton.SetActive(false);
-        playButton.SetActive(true);
+        //pauseButton.SetActive(false);
+        //playButton.SetActive(true);
     }
 
     public void PauseAudio()
@@ -85,5 +88,17 @@ public class AudioManager : MonoBehaviour
         seconds = playTime % 60;
         minutes = (playTime / 60) % 60;
         clipTimeText.text = minutes + ":" + seconds.ToString("D2") + "/" + ((fullLength / 60) % 60 + ":" + (fullLength % 60).ToString("D2"));
+    }
+
+    public void LoadClip(string c)
+    {//StartCoroutine(WaitForUIActivation());
+        if (audioClip == null || audioClip.name != c)
+        {UnityEngine.Debug.Log("ladataan " + c);
+            audioClip = Resources.Load(c) as AudioClip;
+            //source.clip = audioClip;
+            //UnityEngine.Debug.Log(audioClip.name);
+
+            //ShowPlayTime();
+        }
     }
 }

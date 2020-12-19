@@ -19,7 +19,7 @@ public class Coords
     private float wait;
 
     // Constructor
-    public Coords (string pID, float pLat, float pLon, String pAudio, float pRadi = 5, float pWait = 5)
+    public Coords (string pID, float pLat, float pLon, String pAudio, float pRadi, float pWait)
     {
         id = pID;
         dLatitude = pLat;
