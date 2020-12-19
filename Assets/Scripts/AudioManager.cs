@@ -21,6 +21,9 @@ public class AudioManager : MonoBehaviour
     public GameObject playButton;
     public GameObject pauseButton;
 
+    public TabGroup tabs;
+    private int audioControlButton = 0;
+
     void Start ()
     {
         StartCoroutine(WaitForUIActivation());
@@ -96,6 +99,8 @@ public class AudioManager : MonoBehaviour
         {
             audioClip = Resources.Load(c) as AudioClip;
             source.clip = audioClip;
+
+            tabs.Notify(audioControlButton);
             
             fullLength = (int)source.clip.length;
             ShowPlayTime();

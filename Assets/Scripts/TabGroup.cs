@@ -55,6 +55,11 @@ public class TabGroup : MonoBehaviour
                     objectsToSwap[i].SetActive(false);
                 }
             }
+
+            if (button.notificationActive == true)
+            {
+                ClearNotification(tabButtons.IndexOf(button));
+            }
         }
     }
 
@@ -65,5 +70,17 @@ public class TabGroup : MonoBehaviour
             if(selectedTab != null && button == selectedTab) { continue; }
             button.background.color = tabIdle;
         }
+    }
+
+    public void Notify(int i)
+    {
+        tabButtons[i].transform.GetChild (1).gameObject.SetActive(true);
+        tabButtons[i].notificationActive = true;
+    }
+
+    public void ClearNotification(int i)
+    {
+        tabButtons[i].transform.GetChild (1).gameObject.SetActive(false);
+        tabButtons[i].notificationActive = false;
     }
 }
