@@ -42,8 +42,8 @@ public class AudioManager : MonoBehaviour
     {
         if (audioClip != null)
         {
-            source.clip = audioClip;
-            fullLength = (int)source.clip.length;
+            //source.clip = audioClip;
+            //fullLength = (int)source.clip.length;
             source.Play();
 
             playButton.SetActive(false);
@@ -91,14 +91,14 @@ public class AudioManager : MonoBehaviour
     }
 
     public void LoadClip(string c)
-    {//StartCoroutine(WaitForUIActivation());
+    {
         if (audioClip == null || audioClip.name != c)
-        {UnityEngine.Debug.Log("ladataan " + c);
+        {
             audioClip = Resources.Load(c) as AudioClip;
-            //source.clip = audioClip;
-            //UnityEngine.Debug.Log(audioClip.name);
-
-            //ShowPlayTime();
+            source.clip = audioClip;
+            
+            fullLength = (int)source.clip.length;
+            ShowPlayTime();
         }
     }
 }
