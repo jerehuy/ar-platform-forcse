@@ -29,7 +29,7 @@ public static class ResourceManager
     public string trackedImageName = "";
     public string text = "";
     public string audioName = "";
-    public string contentImageNames = "";
+    public string[] contentImageNames;
   }
 
   public static List<Coords> GetGPSObjects() {
@@ -61,7 +61,6 @@ public static class ResourceManager
 
         string data = Resources.Load<TextAsset>("image_data").ToString();
     ImageData[] imageData = JsonHelper.FromJson<ImageData>(data);
-    
     List<ImageAR> imagesList = new List<ImageAR>();
     foreach (ImageData image in imageData) {
       
@@ -70,7 +69,7 @@ public static class ResourceManager
       string newTrackedImage = image.trackedImageName;
       string newText = image.text;
       string newAudio = image.audioName;
-      string newContentImageNames = image.contentImageNames;
+      string[] newContentImageNames = image.contentImageNames;
 
       imagesList.Add(new ImageAR(newId, newName, newTrackedImage, newText, newAudio, newContentImageNames));
       //Debug.Log("ImageAR(" + newId + ", " + newTrackedImage + ", " + newText + ", " + newAudio + ", " + newPicture + ")");

@@ -11,16 +11,17 @@ public class ImageAR
     private string trackedImage;
     private string text;
     private string audio;
-    private string picture;
+    private string[] pictures;
 
     //Builder
-    public ImageAR (string pID, string name, string pTrackedImage, string pText, string pAudio, string pPicture)
+    public ImageAR (string pID, string pName, string pTrackedImage, string pText, string pAudio, string[] pPictures)
     {
         id = pID;
+        name = pName;
         trackedImage = pTrackedImage;
         text = pText;
         audio = pAudio;
-        picture = pPicture;
+        pictures = pPictures;
     }
 
     //Accessors
@@ -59,10 +60,10 @@ public class ImageAR
     }
 
     //Picture
-    public string Picture
+    public string[] Pictures
     {
-        get { return picture; }
-        set { picture = value; }
+        get { return pictures; }
+        set { pictures = value; }
     }
     
 }

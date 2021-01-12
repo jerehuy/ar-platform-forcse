@@ -12,6 +12,8 @@ public class AppManager : MonoBehaviour
     AsyncOperation loadingOperation;
     public Slider loadingBar;
 
+    private List<ImageAR> imageList = new List<ImageAR>();
+
     private void Awake()
     {
         instance = this;

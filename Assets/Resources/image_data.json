@@ -1,1 +1,22 @@
-{"data":[{"id": "1", "trackedImageName": "image1", "text": "Test description", "audioName": "audio1", "pictureName": ""}]}
+{
+    "data": [
+        {
+            "id": "1",
+            "name": "test",
+            "trackedImageName": "image1",
+            "text": "Test description",
+            "contentImageNames": [
+                "duck_2.jpg",
+                "duck_3.jpg"
+            ],
+            "audioName": "audio1"
+        },
+        {
+            "id": "2",
+            "name": "test2",
+            "trackedImageName": "image2",
+            "text": "Test description",
+            "contentImageNames": []
+        }
+    ]
+}
