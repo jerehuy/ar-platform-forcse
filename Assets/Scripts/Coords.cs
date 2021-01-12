@@ -12,6 +12,7 @@ public class Coords
 {
     // Variables
     private string id;
+    private string name;
     private float dLatitude;
     private float dLongitude;
     private float radius;
@@ -19,7 +20,7 @@ public class Coords
     private float wait;
 
     // Constructor
-    public Coords (string pID, float pLat, float pLon, String pAudio, float pRadi, float pWait)
+    public Coords (string pID, string name, float pLat, float pLon, String pAudio, float pRadi, float pWait)
     {
         id = pID;
         dLatitude = pLat;
@@ -35,6 +36,12 @@ public class Coords
     {
         get { return id; }
         set { id = value; }
+    }
+    // Name of the location
+    public string Name
+    {
+        get { return name; }
+        set { name = value; }
     }
     // Latitude
     public float Latitude

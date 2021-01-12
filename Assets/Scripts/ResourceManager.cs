@@ -10,6 +10,7 @@ public static class ResourceManager
   private class GPSData
   {
     public string id = "";
+    public string name = "";
     public string latitude = "";
     public string longitude = "";
     public string audioName = "";
@@ -24,10 +25,11 @@ public static class ResourceManager
   private class ImageData
   {
     public string id = "";
+    public string name = "";
     public string trackedImageName = "";
     public string text = "";
     public string audioName = "";
-    public string pictureName = "";
+    public string contentImageNames = "";
   }
 
   public static List<Coords> GetGPSObjects() {
@@ -41,6 +43,7 @@ public static class ResourceManager
     foreach (GPSData gps in gpsData) {
       
       string newId = gps.id;
+      string newName = gps.name;
       float newLatitude = float.Parse(gps.latitude, format);
       float newLongitude = float.Parse(gps.longitude, format);
       string newAudio = gps.audioName;
@@ -48,7 +51,7 @@ public static class ResourceManager
       float newActivation = float.Parse(gps.activation, format);
       float newDeactivation = float.Parse(gps.deactivation, format);
 
-      coordsList.Add(new Coords(newId, newLatitude, newLongitude, newAudio, newRadius ,newActivation/*, newDeactivation */));
+      coordsList.Add(new Coords(newId, newName, newLatitude, newLongitude, newAudio, newRadius ,newActivation/*, newDeactivation */));
       //Debug.Log("GPS(" + newId + ", " + newLatitude + ", " + newLongitude + ", " + newAudio + ", " + newRadius + ", " + newActivation + ", " + newDeactivation + ")");
     }
     return coordsList;
@@ -63,12 +66,13 @@ public static class ResourceManager
     foreach (ImageData image in imageData) {
       
       string newId = image.id;
+      string newName = image.name;
       string newTrackedImage = image.trackedImageName;
       string newText = image.text;
       string newAudio = image.audioName;
-      string newPicture = image.pictureName;
+      string newContentImageNames = image.contentImageNames;
 
-      imagesList.Add(new ImageAR(newId, newTrackedImage, newText, newAudio, newPicture));
+      imagesList.Add(new ImageAR(newId, newName, newTrackedImage, newText, newAudio, newContentImageNames));
       //Debug.Log("ImageAR(" + newId + ", " + newTrackedImage + ", " + newText + ", " + newAudio + ", " + newPicture + ")");
     }
 

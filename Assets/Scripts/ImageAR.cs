@@ -7,13 +7,14 @@ public class ImageAR
 {
     //Variables
     private string id;
+    private string name;
     private string trackedImage;
     private string text;
     private string audio;
     private string picture;
 
     //Builder
-    public ImageAR (string pID, string pTrackedImage, string pText, string pAudio, string pPicture)
+    public ImageAR (string pID, string name, string pTrackedImage, string pText, string pAudio, string pPicture)
     {
         id = pID;
         trackedImage = pTrackedImage;
@@ -29,6 +30,13 @@ public class ImageAR
     {
         get { return id; }
         set { id = value; }
+    }
+
+    //Name
+    public string Name
+    {
+        get { return name; }
+        set { name = value; }
     }
 
     public string TrackedImage
