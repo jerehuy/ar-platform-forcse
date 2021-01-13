@@ -23,6 +23,7 @@ public class GPS : MonoBehaviour
     public List<string> processing = new List<string>();
     public bool flag = false;
 
+    public AudioManager am;
 
     // Start is called before the first frame update
     void Start()
@@ -153,9 +154,11 @@ public class GPS : MonoBehaviour
         {
 
             // Hyödynnämme PlayOneShot -metodia vain testaustarkoituksessa
-            AudioSource audio = gameObject.AddComponent<AudioSource>();
-            audio.PlayOneShot((AudioClip)Resources.Load(Audio));
 
+            //AudioSource audio = gameObject.AddComponent<AudioSource>();
+            //audio.PlayOneShot((AudioClip)Resources.Load(Audio));
+
+            am.LoadClip(Audio);
         }
         // Suoritettuamme prosessin poistamme sen listalta
         int ind = 0;
