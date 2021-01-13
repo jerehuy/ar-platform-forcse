@@ -148,5 +148,6 @@ public class ImageTracking : MonoBehaviour
         currentImageText.text = "Tracked:" + name;
         previousImageText.text = "Counter: " + counter;
 
+        
     }
 }

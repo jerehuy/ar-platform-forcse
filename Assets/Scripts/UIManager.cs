@@ -16,9 +16,8 @@ public class UIManager : MonoBehaviour
 
     IEnumerator WaitForSceneToLoad()
     {
-        LoadingScene.mainViewActive = true; //prev false
-        mainView.SetActive(true);
-        menu.SetActive(true);
+        //LoadingScene.mainViewActive = true; //prev false
+        mainView.SetActive(false);
 
         while (!LoadingScene.loadingReady)
         {
@@ -26,7 +25,6 @@ public class UIManager : MonoBehaviour
         }
         
         mainView.SetActive(true);
-        menu.SetActive(true);
         LoadingScene.mainViewActive = true;
     }
 
