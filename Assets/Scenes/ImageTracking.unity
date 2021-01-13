@@ -1550,7 +1550,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainView: {fileID: 571859098}
-  menu: {fileID: 0}
 --- !u!1 &983753034
 GameObject:
   m_ObjectHideFlags: 0
