@@ -8,7 +8,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GPS : MonoBehaviour
 {
@@ -21,14 +20,9 @@ public class GPS : MonoBehaviour
     LocationService palvelin = Input.location;
     // Luodaan testilista olioille
     public List<Coords> CoordsList = new List<Coords>();
+    public List<string> processing = new List<string>();
     public bool flag = false;
 
-    // references to help testing by Jaakko
-    public Text lat;
-    public Text longi;
-    public Text staattus;
-
-    public AudioManager am;
 
     // Start is called before the first frame update
     void Start()
@@ -37,7 +31,9 @@ public class GPS : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         StartCoroutine(StartLocationService());
 
+        // Haetaan oliolista
         CoordsList = ResourceManager.GetGPSObjects();
+
     }
 
     private IEnumerator StartLocationService()
@@ -109,7 +105,7 @@ public class GPS : MonoBehaviour
                     Math.Sin(lonDe / 2) * Math.Sin(lonDe / 2);
         double havC = 2 * Math.Asin(Math.Min(1, Math.Sqrt(havA)));
         // Palautetaan etäisyys (metreinä)
-        //UnityEngine.Debug.Log("("+Lat+"|"+Lon+") PALAUTUS: " + (havR * havC));
+        UnityEngine.Debug.Log("(" + Lat + "|" + Lon + ") PALAUTUS: " + (havR * havC));
         return (havR * havC);
     }
 
@@ -118,31 +114,35 @@ public class GPS : MonoBehaviour
         foreach (var corObject in CoordsList)
         {
             double distance = Distance(corObject.Latitude, corObject.Longitude);
+            bool process = true;
 
             if (Distance(corObject.Latitude, corObject.Longitude) != 0
                 && Distance(corObject.Latitude, corObject.Longitude) <= corObject.Radius)
             {
-                
-                StartCoroutine(Waiting(corObject.Latitude, corObject.Longitude, corObject.Radius, corObject.Wait, corObject.Audio));
+                // Tarkistetaan, että kyseisellä koordinaatitunnuksella ei ole prosessia jo käynnissä
+                foreach (var corID in processing)
+                {
+                    if (corID.Equals(corObject.ID))
+                    {
+                        process = false;
+                    }
+                }
+
+                // Tallennetaan prosessoitavan koordinaatin id listaan
+                if (process)
+                {
+                    processing.Add(corObject.ID);
+                    StartCoroutine(Waiting(corObject.Latitude, corObject.Longitude, corObject.Radius, corObject.Wait, corObject.Audio, corObject.ID));
+                }
 
             }
-
-
-            /*IGNORE*/
-            /*
-            if (Distance(corObject.Latitude, corObject.Longitude) <= corObject.Radius)
-            {
-                AudioSource audio = gameObject.AddComponent<AudioSource>();
-                audio.PlayOneShot((AudioClip)Resources.Load(corObject.Audio));
-                //flag = true;
-            }
-            */
         }
-        
     }
 
-    private IEnumerator Waiting(float Lat, float Lon, float Radius, float Wait, string audioClip)
+    private IEnumerator Waiting(float Lat, float Lon, float Radius, float Wait, string Audio, string ID)
     {
+
+
         float wait = Wait;
         while (wait > 0)
         {
@@ -151,18 +151,21 @@ public class GPS : MonoBehaviour
         }
         if (Distance(Lat, Lon) <= Radius)
         {
-            //disabled automatic playing of audio
-            //AudioSource audio = gameObject.AddComponent<AudioSource>();
-            //audio.PlayOneShot((AudioClip)Resources.Load(audioClip));
 
-            am.LoadClip(audioClip);
+            // Hyödynnämme PlayOneShot -metodia vain testaustarkoituksessa
+            AudioSource audio = gameObject.AddComponent<AudioSource>();
+            audio.PlayOneShot((AudioClip)Resources.Load(Audio));
 
-            flag = true;
         }
-        // for testing by Jaakko
-        else
+        // Suoritettuamme prosessin poistamme sen listalta
+        int ind = 0;
+        foreach (var corID in processing)
         {
-            flag = false;
+            ind++;
+            if (corID == ID)
+            {
+                processing.RemoveAt(ind);
+            }
         }
 
     }
@@ -170,28 +173,26 @@ public class GPS : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
         // Päivitetään sijaintitiedot
         Location();
         // Tarkista koordinaattien etäisyys
         Check();
-        
-        
+
+
 
         // S-marketin edustan koordinaatit (syötä tähän mitkä tahansa haluamasi koordinaatit)
-        if (flag == false) {
-            status = "Etäisyys: " + distance.ToString() + " m.\n" + "Aikaleima: " + time;
+        if (flag == false)
+        {
+            status = /*"Etäisyys: " + distance.ToString() + " meters.\n" +*/ "Aikaleima: " + time;
         }
         else
         {
-            status = "Pääsimme perille! Aikaleima: " + time;
+            status = "Pääsimme perille!";
         }
-        
-        // for testing by Jaakko
-        lat.text = "Lat: " + latitude.ToString();
-        longi.text = "Long: " + longitude.ToString();
-        staattus.text = "Status: " + status;
-        
-        
+
+
+
+
     }
 }
