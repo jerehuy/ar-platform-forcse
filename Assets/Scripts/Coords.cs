@@ -1,4 +1,4 @@
-/*
+﻿/*
     Arttu Lehtola
 */
 
@@ -10,7 +10,7 @@ using UnityEngine;
 
 public class Coords
 {
-    // Variables
+    // Muuttujat
     private string id;
     private string name;
     private float dLatitude;
@@ -19,8 +19,8 @@ public class Coords
     private String audio;
     private float wait;
 
-    // Constructor
-    public Coords (string pID, string pName, float pLat, float pLon, String pAudio, float pRadi, float pWait)
+    // Rakentaja
+    public Coords(string pID, string pName, float pLat, float pLon, String pAudio, float pRadi = 5, float pWait = 5)
     {
         id = pID;
         name = pName;
@@ -31,44 +31,44 @@ public class Coords
         wait = pWait;
     }
 
-    // Accessors
+    // Aksessorit
     // ID
     public string ID
     {
         get { return id; }
         set { id = value; }
     }
-    // Name of the location
+    // Nimi
     public string Name
     {
         get { return name; }
         set { name = value; }
     }
-    // Latitude
+    // Leveysaste
     public float Latitude
     {
-        get { return dLatitude;     }
-        set { dLatitude = value;    }
+        get { return dLatitude; }
+        set { dLatitude = value; }
     }
-    // Longitude
+    // Pituusaste
     public float Longitude
     {
-        get { return dLongitude;    }
-        set { dLongitude = value;   }
+        get { return dLongitude; }
+        set { dLongitude = value; }
     }
-    // Radius
+    // S�de
     public float Radius
     {
         get { return radius; }
         set { radius = value; }
     }
-    // Audio clip name
+    // Audiop�tk�
     public String Audio
     {
         get { return audio; }
         set { audio = value; }
     }
-    // Waiting time
+    // Odotusaika
     public float Wait
     {
         get { return wait; }
