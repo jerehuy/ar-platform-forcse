@@ -14,9 +14,18 @@
         {
             "id": "2",
             "name": "test2",
-            "trackedImageName": "image2",
+            "trackedImageName": "gameboy2",
             "text": "Test description",
-            "contentImageNames": []
+            "contentImageNames": [],
+            "audioName": "audio1"
+        },
+        {
+            "id": "2",
+            "name": "test3",
+            "trackedImageName": "island",
+            "text": "Test description",
+            "contentImageNames": [],
+            "audioName": "audio1"
         }
     ]
 }

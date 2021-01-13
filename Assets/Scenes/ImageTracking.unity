@@ -661,6 +661,7 @@ MonoBehaviour:
   secondLibrary: {fileID: 0}
   addPicture: {fileID: 443810053}
   changeLibraryButton: {fileID: 1777156750}
+  am: {fileID: 515415921}
 --- !u!1 &443810051
 GameObject:
   m_ObjectHideFlags: 0
@@ -1274,10 +1275,8 @@ MonoBehaviour:
   distance: 0
   time: 
   status: 
+  processing: []
   flag: 0
-  lat: {fileID: 2143998578}
-  longi: {fileID: 130424277}
-  staattus: {fileID: 539903541}
   am: {fileID: 515415921}
 --- !u!1 &773603404
 GameObject:
@@ -1550,6 +1549,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainView: {fileID: 571859098}
+  menu: {fileID: 0}
 --- !u!1 &983753034
 GameObject:
   m_ObjectHideFlags: 0
@@ -1809,10 +1809,8 @@ MonoBehaviour:
   distance: 0
   time: 
   status: 
+  processing: []
   flag: 0
-  lat: {fileID: 2143998578}
-  longi: {fileID: 130424277}
-  staattus: {fileID: 539903541}
   am: {fileID: 515415921}
 --- !u!114 &1023804168
 MonoBehaviour:
