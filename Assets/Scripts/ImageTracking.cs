@@ -38,6 +38,8 @@ public class ImageTracking : MonoBehaviour
 
     public List<ImageAR> imageList = new List<ImageAR>();
     public AudioManager am;
+    public UIManager uiM;
+    private int viaImageTracking = 2;
 
     /* 
     * Method for changing the referenceImageLibrary.
@@ -158,7 +160,9 @@ public class ImageTracking : MonoBehaviour
             if (image.TrackedImage == name)
             {
                 currentImageText.text = "Tracked:" + name;
+            
                 am.LoadClip(image.Audio);
+                uiM.UpdateCurrentTargetText(image.Name, 2, "");
                 break;
             }
         }

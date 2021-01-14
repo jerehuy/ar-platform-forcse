@@ -20,16 +20,16 @@
             "audioName": "audio1"
         },
         {
-            "id": "2",
+            "id": "3",
             "name": "test3",
             "trackedImageName": "island",
             "text": "Test description",
             "contentImageNames": [],
-            "audioName": "audio1"
+            "audioName": "audio1 kopio.mp3"
         },
         {
             "id": "9cbc2841-e50c-4f5a-bc24-09bc668c14c4",
-            "name": "test",
+            "name": "test4",
             "trackedImageName": "island.jpg",
             "text": "a",
             "contentImageNames": [],

@@ -24,6 +24,7 @@ public class GPS : MonoBehaviour
     public bool flag = false;
 
     public AudioManager am;
+    public UIManager uiM;
 
     // Start is called before the first frame update
     void Start()
@@ -133,14 +134,14 @@ public class GPS : MonoBehaviour
                 if (process)
                 {
                     processing.Add(corObject.ID);
-                    StartCoroutine(Waiting(corObject.Latitude, corObject.Longitude, corObject.Radius, corObject.Wait, corObject.Audio, corObject.ID));
+                    StartCoroutine(Waiting(corObject.Name, corObject.Latitude, corObject.Longitude, corObject.Radius, corObject.Wait, corObject.Audio, corObject.ID));
                 }
 
             }
         }
     }
 
-    private IEnumerator Waiting(float Lat, float Lon, float Radius, float Wait, string Audio, string ID)
+    private IEnumerator Waiting(string name, float Lat, float Lon, float Radius, float Wait, string Audio, string ID)
     {
 
 
@@ -159,6 +160,7 @@ public class GPS : MonoBehaviour
             //audio.PlayOneShot((AudioClip)Resources.Load(Audio));
 
             am.LoadClip(Audio);
+            uiM.UpdateCurrentTargetText(name, 1, Audio);
         }
         // Suoritettuamme prosessin poistamme sen listalta
         int ind = 0;
