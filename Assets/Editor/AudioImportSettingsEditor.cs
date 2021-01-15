@@ -1,5 +1,4 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 using System.Runtime.InteropServices;
 using UnityEngine.Events;
@@ -14,7 +13,7 @@ internal sealed class AudioImportSettingsEditor : AssetPostprocessor
         {
             return;
         }
-
+        
         AudioImporterSampleSettings sampleSettings = importer.defaultSampleSettings;
         sampleSettings.loadType = AudioClipLoadType.Streaming;
         sampleSettings.compressionFormat = AudioCompressionFormat.Vorbis;

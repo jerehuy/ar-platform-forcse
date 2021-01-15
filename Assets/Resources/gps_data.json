@@ -26,9 +26,9 @@
             "latitude": "61.50205",
             "longitude": "23.7323",
             "audioName": "audio1",
-            "radius": "10",
+            "radius": "12",
             "activation": "5",
-            "deactivation": "10"
+            "deactivation": "5"
         },
         {
             "id": "4f43d80c-f928-477b-beae-0a7c25131906",

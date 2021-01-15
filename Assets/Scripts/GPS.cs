@@ -167,8 +167,6 @@ public class GPS : MonoBehaviour
 
             am.LoadClip(Audio);
             uiM.UpdateCurrentTargetText(name, 1, Audio);
-            AudioSource audio = gameObject.AddComponent<AudioSource>();
-            audio.PlayOneShot((AudioClip)Resources.Load(Audio));
         }
         // Odota (poistumis)aika, jos poistut koordinaatista
         // Tällä hetkellä samaa muuttujaa käytetään poistumiseen ja varmistamiseen

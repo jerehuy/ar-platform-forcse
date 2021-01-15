@@ -14,10 +14,10 @@
         {
             "id": "2",
             "name": "test2",
-            "trackedImageName": "image2",
+            "trackedImageName": "gameboy2",
             "text": "Test description",
             "contentImageNames": [],
-            "audioName": "audio1"
+            "audioName": "audio1 kopio"
         },
         {
             "id": "3",

@@ -93,6 +93,8 @@ public class ImageTracking : MonoBehaviour
     private void Start()
     {
         StartCoroutine(WaitForUIActivation());
+
+        imageList = ResourceManager.GetImageTrackingObjects();
     }
 
     IEnumerator WaitForUIActivation()
