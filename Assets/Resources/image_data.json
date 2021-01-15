@@ -14,9 +14,26 @@
         {
             "id": "2",
             "name": "test2",
-            "trackedImageName": "image2",
+            "trackedImageName": "gameboy2",
             "text": "Test description",
-            "contentImageNames": []
+            "contentImageNames": [],
+            "audioName": "audio1"
+        },
+        {
+            "id": "2",
+            "name": "test3",
+            "trackedImageName": "island",
+            "text": "Test description",
+            "contentImageNames": [],
+            "audioName": "audio1"
+        },
+        {
+            "id": "9cbc2841-e50c-4f5a-bc24-09bc668c14c4",
+            "name": "test",
+            "trackedImageName": "island.jpg",
+            "text": "a",
+            "contentImageNames": [],
+            "audioName": "audio1 kopio.mp3"
         }
     ]
 }
