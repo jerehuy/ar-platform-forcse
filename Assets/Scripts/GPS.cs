@@ -22,7 +22,6 @@ public class GPS : MonoBehaviour
     public List<string> processing = new List<string>();
     public bool flag = false;
 
-    public AudioManager am;
 
     // Start is called before the first frame update
     void Start()
@@ -159,16 +158,8 @@ public class GPS : MonoBehaviour
         if (Distance(Lat, Lon) <= Radius)
         {
             // Hyödynnämme PlayOneShot -metodia vain testaustarkoituksessa
-<<<<<<< HEAD
             AudioSource audio = gameObject.AddComponent<AudioSource>();
             audio.PlayOneShot((AudioClip)Resources.Load(Audio));
-=======
-
-            //AudioSource audio = gameObject.AddComponent<AudioSource>();
-            //audio.PlayOneShot((AudioClip)Resources.Load(Audio));
-
-            am.LoadClip(Audio);
->>>>>>> c1329fb6f2476f4cc33597cbf82e37c6c8b21552
         }
         // Suoritettuamme prosessin poistamme sen listalta
         int ind = 0;
