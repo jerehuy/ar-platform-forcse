@@ -150,6 +150,7 @@ public class GPS : MonoBehaviour
     private IEnumerator Waiting(float Lat, float Lon, float Radius, float Wait, string Audio, string ID)
     {
         float wait = Wait;
+        float exitWait = Wait;
         while (wait > 0)
         {
             yield return new WaitForSeconds(1);
@@ -160,6 +161,16 @@ public class GPS : MonoBehaviour
             // Hyödynnämme PlayOneShot -metodia vain testaustarkoituksessa
             AudioSource audio = gameObject.AddComponent<AudioSource>();
             audio.PlayOneShot((AudioClip)Resources.Load(Audio));
+        }
+        // Odota (poistumis)aika, jos poistut koordinaatista
+        // Tällä hetkellä samaa muuttujaa käytetään poistumiseen ja varmistamiseen
+        else
+        {
+            while (wait > 0)
+            {
+                yield return new WaitForSeconds(1);
+                exitWait--;
+            }
         }
         // Suoritettuamme prosessin poistamme sen listalta
         int ind = 0;
