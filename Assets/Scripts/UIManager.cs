@@ -23,8 +23,8 @@ public class UIManager : MonoBehaviour
 
     IEnumerator WaitForSceneToLoad()
     {
-        //LoadingScene.mainViewActive = true; //prev false
-        mainView.SetActive(false);
+        LoadingScene.mainViewActive = true;
+        mainView.SetActive(true);
 
         while (!LoadingScene.loadingReady)
         {

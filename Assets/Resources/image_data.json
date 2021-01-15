@@ -14,7 +14,7 @@
         {
             "id": "2",
             "name": "test2",
-            "trackedImageName": "gameboy2",
+            "trackedImageName": "image2",
             "text": "Test description",
             "contentImageNames": [],
             "audioName": "audio1"
