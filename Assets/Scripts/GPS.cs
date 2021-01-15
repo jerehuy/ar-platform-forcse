@@ -2,7 +2,6 @@
     Arttu Lehtola
 */
 
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -115,6 +114,7 @@ public class GPS : MonoBehaviour
         {
             double distance = Distance(corObject.Latitude, corObject.Longitude);
             bool process = true;
+            int ccp = 0;
 
             if (Distance(corObject.Latitude, corObject.Longitude) != 0
                 && Distance(corObject.Latitude, corObject.Longitude) <= corObject.Radius)
@@ -128,21 +128,27 @@ public class GPS : MonoBehaviour
                     }
                 }
 
+                //(concurrent processes = ccp)
+                // jos prosesseja on useampi, niin vältä konflikti
+                /* Tämä ei ole optimaali ratkaisu */
+                if (ccp > 1)
+                {
+                    process = false;
+                }
+
                 // Tallennetaan prosessoitavan koordinaatin id listaan
                 if (process)
                 {
                     processing.Add(corObject.ID);
                     StartCoroutine(Waiting(corObject.Latitude, corObject.Longitude, corObject.Radius, corObject.Wait, corObject.Audio, corObject.ID));
+                    ccp = processing.Count;
                 }
-
             }
         }
     }
 
     private IEnumerator Waiting(float Lat, float Lon, float Radius, float Wait, string Audio, string ID)
     {
-
-
         float wait = Wait;
         while (wait > 0)
         {
@@ -151,11 +157,9 @@ public class GPS : MonoBehaviour
         }
         if (Distance(Lat, Lon) <= Radius)
         {
-
             // Hyödynnämme PlayOneShot -metodia vain testaustarkoituksessa
             AudioSource audio = gameObject.AddComponent<AudioSource>();
             audio.PlayOneShot((AudioClip)Resources.Load(Audio));
-
         }
         // Suoritettuamme prosessin poistamme sen listalta
         int ind = 0;
@@ -167,7 +171,6 @@ public class GPS : MonoBehaviour
                 processing.RemoveAt(ind);
             }
         }
-
     }
 
     // Update is called once per frame
@@ -179,8 +182,6 @@ public class GPS : MonoBehaviour
         // Tarkista koordinaattien etäisyys
         Check();
 
-
-
         // S-marketin edustan koordinaatit (syötä tähän mitkä tahansa haluamasi koordinaatit)
         if (flag == false)
         {
@@ -190,9 +191,6 @@ public class GPS : MonoBehaviour
         {
             status = "Pääsimme perille!";
         }
-
-
-
 
     }
 }
