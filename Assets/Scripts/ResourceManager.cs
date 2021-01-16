@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Globalization;
+using System.IO;
 
 public static class ResourceManager
 {
@@ -46,7 +47,7 @@ public static class ResourceManager
       string newName = gps.name;
       float newLatitude = float.Parse(gps.latitude, format);
       float newLongitude = float.Parse(gps.longitude, format);
-      string newAudio = gps.audioName;
+      string newAudio = Path.GetFileNameWithoutExtension(gps.audioName);
       float newRadius = float.Parse(gps.radius, format);
       float newActivation = float.Parse(gps.activation, format);
       float newDeactivation = float.Parse(gps.deactivation, format);
@@ -66,9 +67,9 @@ public static class ResourceManager
       
       string newId = image.id;
       string newName = image.name;
-      string newTrackedImage = image.trackedImageName;
+      string newTrackedImage = Path.GetFileNameWithoutExtension(image.trackedImageName);
       string newText = image.text;
-      string newAudio = image.audioName;
+      string newAudio = Path.GetFileNameWithoutExtension(image.audioName);
       string[] newContentImageNames = image.contentImageNames;
 
       imagesList.Add(new ImageAR(newId, newName, newTrackedImage, newText, newAudio, newContentImageNames));

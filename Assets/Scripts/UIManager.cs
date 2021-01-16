@@ -64,5 +64,9 @@ public class UIManager : MonoBehaviour
             UpdateCurrentTargetText(lastDetectedLocation , 1, lastLocationAudio);
             am.LoadClip(lastLocationAudio);
         }
+        else {
+            currentTargetBox.SetActive(false);
+            am.ClearClip();
+        }
     }
 }

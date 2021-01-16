@@ -8,7 +8,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(AudioSource))]
 public class AudioManager : MonoBehaviour
 {
-    private AudioClip audioClip;
+    private AudioClip audioClip = null;
     private AudioSource source;
 
     public Text clipTimeText;
@@ -105,5 +105,20 @@ public class AudioManager : MonoBehaviour
             fullLength = (int)source.clip.length;
             ShowPlayTime();
         }
+    }
+
+    public void ClearClip()
+    {
+        pauseButton.SetActive(false);
+        playButton.SetActive(true);
+
+        audioClip = null;
+        source.clip = null;
+
+        fullLength = 0;
+        playTime = 0;
+        ShowPlayTime();
+        
+        tabs.ClearNotification(audioControlButton);
     }
 }
