@@ -49,6 +49,8 @@ public class AudioManager : MonoBehaviour
             //fullLength = (int)source.clip.length;
             source.Play();
 
+            tabs.ClearNotification(audioControlButton);
+
             playButton.SetActive(false);
             pauseButton.SetActive(true);
 
@@ -118,7 +120,7 @@ public class AudioManager : MonoBehaviour
         fullLength = 0;
         playTime = 0;
         ShowPlayTime();
-        
+
         tabs.ClearNotification(audioControlButton);
     }
 }
