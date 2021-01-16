@@ -22,8 +22,6 @@ public class GPS : MonoBehaviour
     public List<string> processing = new List<string>();
     public bool flag = false;
 
-    public AudioManager am;
-    public UIManager uiM;
 
     // Start is called before the first frame update
     void Start()
@@ -142,17 +140,18 @@ public class GPS : MonoBehaviour
                 if (process)
                 {
                     processing.Add(corObject.ID);
-                    StartCoroutine(Waiting(corObject.Name, corObject.Latitude, corObject.Longitude, corObject.Radius, corObject.Wait, corObject.Audio, corObject.ID));
+                    StartCoroutine(Waiting(corObject.Latitude, corObject.Longitude, corObject.Radius, corObject.Wait,
+                        corObject.Exit, corObject.Audio, corObject.ID));
                     ccp = processing.Count;
                 }
             }
         }
     }
 
-    private IEnumerator Waiting(string name, float Lat, float Lon, float Radius, float Wait, string Audio, string ID)
+    private IEnumerator Waiting(float Lat, float Lon, float Radius, float Wait, float Exit, string Audio, string ID)
     {
         float wait = Wait;
-        float exitWait = Wait;
+        float exitWait = Exit;
         while (wait > 0)
         {
             yield return new WaitForSeconds(1);
@@ -161,12 +160,8 @@ public class GPS : MonoBehaviour
         if (Distance(Lat, Lon) <= Radius)
         {
             // Hyödynnämme PlayOneShot -metodia vain testaustarkoituksessa
-
-            //AudioSource audio = gameObject.AddComponent<AudioSource>();
-            //audio.PlayOneShot((AudioClip)Resources.Load(Audio));
-
-            am.LoadClip(Audio);
-            uiM.UpdateCurrentTargetText(name, 1, Audio);
+            AudioSource audio = gameObject.AddComponent<AudioSource>();
+            audio.PlayOneShot((AudioClip)Resources.Load(Audio));
         }
         // Odota (poistumis)aika, jos poistut koordinaatista
         // Tällä hetkellä samaa muuttujaa käytetään poistumiseen ja varmistamiseen
