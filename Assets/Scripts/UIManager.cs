@@ -69,4 +69,9 @@ public class UIManager : MonoBehaviour
             am.ClearClip();
         }
     }
+
+    public void HideCurrentTarget()
+    {
+        currentTargetBox.SetActive(false);
+    }
 }

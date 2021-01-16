@@ -22,6 +22,10 @@ public class GPS : MonoBehaviour
     public List<string> processing = new List<string>();
     public bool flag = false;
 
+    public AudioManager am;
+    public UIManager uiM;
+
+    private string lastVisitedID = "";
 
     // Start is called before the first frame update
     void Start()
@@ -114,7 +118,7 @@ public class GPS : MonoBehaviour
         {
             double distance = Distance(corObject.Latitude, corObject.Longitude);
             bool process = true;
-            int ccp = 0;
+            //int ccp = 0;
 
             if (Distance(corObject.Latitude, corObject.Longitude) != 0
                 && Distance(corObject.Latitude, corObject.Longitude) <= corObject.Radius)
@@ -130,57 +134,63 @@ public class GPS : MonoBehaviour
 
                 //(concurrent processes = ccp)
                 // jos prosesseja on useampi, niin vältä konflikti
-                /* Tämä ei ole optimaali ratkaisu */
+                /* Tämä ei ole optimaali ratkaisu 
                 if (ccp > 1)
                 {
                     process = false;
-                }
+                }*/
 
                 // Tallennetaan prosessoitavan koordinaatin id listaan
                 if (process)
                 {
                     processing.Add(corObject.ID);
-                    StartCoroutine(Waiting(corObject.Latitude, corObject.Longitude, corObject.Radius, corObject.Wait,
-                        corObject.Exit, corObject.Audio, corObject.ID));
-                    ccp = processing.Count;
+                    StartCoroutine(Waiting(corObject.Name, corObject.Latitude, corObject.Longitude, corObject.Radius, corObject.Wait, corObject.Audio, corObject.ID, true));
+                    //ccp = processing.Count;
                 }
             }
-        }
-    }
-
-    private IEnumerator Waiting(float Lat, float Lon, float Radius, float Wait, float Exit, string Audio, string ID)
-    {
-        float wait = Wait;
-        float exitWait = Exit;
-        while (wait > 0)
-        {
-            yield return new WaitForSeconds(1);
-            wait--;
-        }
-        if (Distance(Lat, Lon) <= Radius)
-        {
-            // Hyödynnämme PlayOneShot -metodia vain testaustarkoituksessa
-            AudioSource audio = gameObject.AddComponent<AudioSource>();
-            audio.PlayOneShot((AudioClip)Resources.Load(Audio));
-        }
-        // Odota (poistumis)aika, jos poistut koordinaatista
-        // Tällä hetkellä samaa muuttujaa käytetään poistumiseen ja varmistamiseen
-        else
-        {
-            while (wait > 0)
-            {
-                yield return new WaitForSeconds(1);
-                exitWait--;
+            else if (corObject.ID == lastVisitedID && distance > corObject.Radius && processing.Count > 0) {
+                StartCoroutine(Waiting("", corObject.Latitude, corObject.Longitude, corObject.Radius, corObject.Exit, "", corObject.ID, false));
             }
         }
-        // Suoritettuamme prosessin poistamme sen listalta
-        int ind = 0;
-        foreach (var corID in processing)
+        //uiM.TestProcesses(processing.Count);
+    }
+
+    private IEnumerator Waiting(string name, float Lat, float Lon, float Radius, float Wait, string Audio, string ID, bool enter)
+    {
+        while (Wait > 0)
         {
-            ind++;
-            if (corID == ID)
+            yield return new WaitForSeconds(1);
+            Wait--;
+        }
+        
+        if (enter) {     
+            if (Distance(Lat, Lon) <= Radius)
             {
-                processing.RemoveAt(ind);
+                lastVisitedID = ID;
+                am.LoadClip(Audio);
+                uiM.UpdateCurrentTargetText(name, 1, Audio);
+            }
+        }
+        // Odota (poistumis)aika, jos poistut koordinaatista
+        else {
+            if (Distance(Lat, Lon) > Radius)
+            {
+                // Suoritettuamme prosessin poistamme sen listalta
+                int ind = -1;
+                foreach (var corID in processing)
+                {
+                    ind++;
+                    if (corID == ID)
+                    {
+                        processing.RemoveAt(ind);
+                    }
+                }
+
+                if (processing.Count == 0)
+                {
+                    am.ClearClip();
+                    uiM.HideCurrentTarget();
+                }
             }
         }
     }
