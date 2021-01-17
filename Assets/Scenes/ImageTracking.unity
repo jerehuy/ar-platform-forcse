@@ -499,8 +499,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a610d8ff3b8b6b249ab47ff2deba086a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runtimeImageLibrary: {fileID: 11400000, guid: 32ed058c88af2574395c454d1b4a857b,
-    type: 2}
+  runtimeImageLibrary: {fileID: 11400000, guid: 32ed058c88af2574395c454d1b4a857b, type: 2}
   am: {fileID: 515415921}
   uiM: {fileID: 812665398}
   tabs: {fileID: 1494105130}
@@ -1196,9 +1195,9 @@ MonoBehaviour:
   targetName: {fileID: 2009567336}
   backButton: {fileID: 1610557510}
   am: {fileID: 515415921}
-  mytext: {fileID: 800153562}
   tabs: {fileID: 1494105130}
   it: {fileID: 435685504}
+  mytext: {fileID: 800153562}
 --- !u!1 &983753034
 GameObject:
   m_ObjectHideFlags: 0

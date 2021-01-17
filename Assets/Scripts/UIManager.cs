@@ -39,7 +39,7 @@ public class UIManager : MonoBehaviour
         LoadingScene.mainViewActive = true;
     }
 
-        public void emptyText()
+    public void emptyText()
     {
         mytext.text = "";
     }
@@ -76,13 +76,11 @@ public class UIManager : MonoBehaviour
             UpdateCurrentTargetText(lastDetectedLocation , 1, lastLocationAudio);
             am.LoadClip(lastLocationAudio);
             tabs.ClearNotification(2);
-            it.changeText("");
         }
         else {
             currentTargetBox.SetActive(false);
             am.ClearClip();
             tabs.ClearNotification(2);
-            it.changeText("");
         }
     }
 

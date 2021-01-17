@@ -92,7 +92,7 @@ public class ImageTracking : MonoBehaviour
     {
         if (name == "")
         {
-            mytext.text = name;
+            uiM.emptyText();
         }
         else
         {
@@ -118,7 +118,6 @@ public class ImageTracking : MonoBehaviour
         {
             if (image.TrackedImage == name)
             {
-                am.LoadClip(image.Audio);
                 uiM.UpdateCurrentTargetText(image.Name, 2, "");
                 am.LoadClip(image.Audio);
                 break;
