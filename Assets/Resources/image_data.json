@@ -13,25 +13,25 @@
         },
         {
             "id": "2",
-            "name": "test2",
-            "trackedImageName": "gameboy2",
-            "text": "Test description",
+            "name": "kissakirja",
+            "trackedImageName": "kissakirja",
+            "text": "This is a book about how to live like your cat.",
             "contentImageNames": [],
             "audioName": "audio1 kopio.mp3"
         },
         {
             "id": "3",
-            "name": "test3",
+            "name": "island",
             "trackedImageName": "island",
-            "text": "Test description",
+            "text": "This is a magic island",
             "contentImageNames": [],
             "audioName": "audio1 kopio.mp3"
         },
         {
             "id": "9cbc2841-e50c-4f5a-bc24-09bc668c14c4",
-            "name": "test4",
-            "trackedImageName": "island.jpg",
-            "text": "a",
+            "name": "TEK_kuva",
+            "trackedImageName": "TEK_kuva",
+            "text": "This is a picture from academic competition.",
             "contentImageNames": [],
             "audioName": "audio1 kopio.mp3"
         }
