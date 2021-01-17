@@ -19,7 +19,6 @@ public class ImageTracking : MonoBehaviour
 
     MutableRuntimeReferenceImageLibrary mutableRuntimeReferenceImageLibrary;
     private ARTrackedImageManager trackedImageManager = null;
-    private Text currentImageText;
     string name = "";
     public List<ImageAR> imageList = new List<ImageAR>();
     public AudioManager am;
@@ -39,8 +38,6 @@ public class ImageTracking : MonoBehaviour
         {
             yield return null;
         }
-
-        currentImageText = GameObject.Find("CurrentImageName").GetComponent<Text>();
         
     }
 
@@ -74,7 +71,7 @@ public class ImageTracking : MonoBehaviour
         }
         foreach (ARTrackedImage trackedImage in eventArgs.removed)
         {
-            currentImageText.text = "Tracking: None";
+
         }
     }
 
@@ -94,14 +91,11 @@ public class ImageTracking : MonoBehaviour
     {
         name = trackedImage.referenceImage.name;
         changeText(name);
-        currentImageText.text = "Tracked:" + name;
 
         foreach (var image in imageList)
         {
             if (image.TrackedImage == name)
             {
-                currentImageText.text = "Tracked:" + name;
-            
                 am.LoadClip(image.Audio);
                 uiM.UpdateCurrentTargetText(image.Name, 2, "");
                 break;
