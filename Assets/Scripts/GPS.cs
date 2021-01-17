@@ -24,6 +24,8 @@ public class GPS : MonoBehaviour
 
     public AudioManager am;
     public UIManager uiM;
+    public ImageTracking it;
+    public TabGroup tabs;
 
     private string lastVisitedID = "";
 
@@ -43,7 +45,7 @@ public class GPS : MonoBehaviour
     {
         if (!Input.location.isEnabledByUser)
         {
-            UnityEngine.Debug.Log("GPS has not been enabled by the user");
+            //UnityEngine.Debug.Log("GPS has not been enabled by the user");
             status += "GPS has not been enabled by the user\n";
             yield break;
         }
@@ -58,14 +60,14 @@ public class GPS : MonoBehaviour
 
         if (maxWait <= 0)
         {
-            UnityEngine.Debug.Log("Timeout");
+            //UnityEngine.Debug.Log("Timeout");
             status = "Timeout\n";
             yield break;
         }
 
         if (palvelin.status == LocationServiceStatus.Failed)
         {
-            UnityEngine.Debug.Log("Unable to determine device's location");
+            //UnityEngine.Debug.Log("Unable to determine device's location");
             status = "Unable to determine device's location\n";
             yield break;
         }
@@ -108,7 +110,7 @@ public class GPS : MonoBehaviour
                     Math.Sin(lonDe / 2) * Math.Sin(lonDe / 2);
         double havC = 2 * Math.Asin(Math.Min(1, Math.Sqrt(havA)));
         // Palautetaan etäisyys (metreinä)
-        UnityEngine.Debug.Log("(" + Lat + "|" + Lon + ") PALAUTUS: " + (havR * havC));
+        //UnityEngine.Debug.Log("(" + Lat + "|" + Lon + ") PALAUTUS: " + (havR * havC));
         return (havR * havC);
     }
 
@@ -169,6 +171,8 @@ public class GPS : MonoBehaviour
                 lastVisitedID = ID;
                 am.LoadClip(Audio);
                 uiM.UpdateCurrentTargetText(name, 1, Audio);
+                it.changeText("");
+                tabs.ClearNotification(2);
             }
         }
         // Odota (poistumis)aika, jos poistut koordinaatista

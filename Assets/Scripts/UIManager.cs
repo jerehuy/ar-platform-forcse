@@ -11,7 +11,10 @@ public class UIManager : MonoBehaviour
     public Text targetDetectionMethod;
     public Text targetName;
     public GameObject backButton;
+    
     public AudioManager am;
+    public TabGroup tabs;
+    public ImageTracking it;
 
     private string lastDetectedLocation = "";
     private string lastLocationAudio = "";
@@ -63,15 +66,20 @@ public class UIManager : MonoBehaviour
         {
             UpdateCurrentTargetText(lastDetectedLocation , 1, lastLocationAudio);
             am.LoadClip(lastLocationAudio);
+            tabs.ClearNotification(2);
+            it.changeText("");
         }
         else {
             currentTargetBox.SetActive(false);
             am.ClearClip();
+            tabs.ClearNotification(2);
+            it.changeText("");
         }
     }
 
     public void HideCurrentTarget()
     {
         currentTargetBox.SetActive(false);
+        lastDetectedLocation = "";
     }
 }

@@ -51,8 +51,7 @@ public class AudioManager : MonoBehaviour
 
             tabs.ClearNotification(audioControlButton);
 
-            playButton.SetActive(false);
-            pauseButton.SetActive(true);
+            SwapButtons(false);
 
             StartCoroutine("WaitForAudioEnd");
         }
@@ -67,8 +66,7 @@ public class AudioManager : MonoBehaviour
             yield return null;
         }
 
-        //pauseButton.SetActive(false);
-        //playButton.SetActive(true);
+        SwapButtons(true);
     }
 
     public void PauseAudio()
@@ -76,8 +74,7 @@ public class AudioManager : MonoBehaviour
         source.Pause();
         StopCoroutine("WaitForAudioEnd");
 
-        pauseButton.SetActive(false);
-        playButton.SetActive(true);
+        SwapButtons(true);
     }
 
     public void ResetTrack()
@@ -99,20 +96,29 @@ public class AudioManager : MonoBehaviour
     {
         if (audioClip == null || audioClip.name != c)
         {
-            audioClip = Resources.Load(c) as AudioClip;
-            source.clip = audioClip;
+            if (c != "")
+            {
+                audioClip = Resources.Load(c) as AudioClip;
+                source.clip = audioClip;
 
-            tabs.Notify(audioControlButton);
-            
-            fullLength = (int)source.clip.length;
-            ShowPlayTime();
+                fullLength = (int)source.clip.length;
+                playTime = 0;
+                ShowPlayTime();
+                tabs.Notify(audioControlButton);
+            }
+            else 
+            {
+                ClearClip();
+            }
         }
     }
 
     public void ClearClip()
     {
-        pauseButton.SetActive(false);
-        playButton.SetActive(true);
+        if (pauseButton.active)
+        {
+            SwapButtons(true);
+        }
 
         audioClip = null;
         source.clip = null;
@@ -122,5 +128,18 @@ public class AudioManager : MonoBehaviour
         ShowPlayTime();
 
         tabs.ClearNotification(audioControlButton);
+    }
+
+    public void SwapButtons(bool pause)
+    {
+        if(pause)
+        {
+            playButton.SetActive(true);
+            pauseButton.SetActive(false);
+        }
+        else {
+            pauseButton.SetActive(true);
+            playButton.SetActive(false);
+        }
     }
 }

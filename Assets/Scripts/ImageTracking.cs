@@ -24,6 +24,7 @@ public class ImageTracking : MonoBehaviour
     public List<ImageAR> imageList = new List<ImageAR>();
     public AudioManager am;
     public UIManager uiM;
+    public TabGroup tabs;
     public Text mytext = null;
 
     private void Start()
@@ -80,12 +81,20 @@ public class ImageTracking : MonoBehaviour
 
     public void changeText(string name)
     {
-        foreach (var image in imageList)
+        if (name == "")
         {
-            if (image.TrackedImage == name)
+            mytext.text = name;
+        }
+        else
+        {
+            foreach (var image in imageList)
             {
-                mytext.text = image.Text;
-                break;
+                if (image.TrackedImage == name && mytext.text != image.Text)
+                {
+                    mytext.text = image.Text;
+                    tabs.Notify(2);
+                    break;
+                }
             }
         }
     }
@@ -101,9 +110,9 @@ public class ImageTracking : MonoBehaviour
             if (image.TrackedImage == name)
             {
                 currentImageText.text = "Tracked:" + name;
-            
-                am.LoadClip(image.Audio);
+
                 uiM.UpdateCurrentTargetText(image.Name, 2, "");
+                am.LoadClip(image.Audio);
                 break;
             }
         }

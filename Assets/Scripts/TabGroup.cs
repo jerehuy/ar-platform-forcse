@@ -74,8 +74,11 @@ public class TabGroup : MonoBehaviour
 
     public void Notify(int i)
     {
-        tabButtons[i].transform.GetChild (1).gameObject.SetActive(true);
-        tabButtons[i].notificationActive = true;
+        if (!tabButtons[i].transform.GetChild (1).gameObject.active)
+        {
+            tabButtons[i].transform.GetChild (1).gameObject.SetActive(true);
+            tabButtons[i].notificationActive = true;
+        }
     }
 
     public void ClearNotification(int i)
