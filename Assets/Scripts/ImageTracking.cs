@@ -29,7 +29,17 @@ public class ImageTracking : MonoBehaviour
     {
         StartCoroutine(WaitForUIActivation());
 
+        //Get the imagelist to be used later. This list contains data about the images and audio.
         imageList = ResourceManager.GetImageTrackingObjects();
+
+        //Create and enable a runtimeImageLibrary so images can be added during runtime.
+        var lib = runtimeImageLibrary;
+        trackedImageManager.referenceLibrary = trackedImageManager.CreateRuntimeLibrary(lib);
+
+        mutableRuntimeReferenceImageLibrary = trackedImageManager.referenceLibrary as MutableRuntimeReferenceImageLibrary;
+
+        trackedImageManager.referenceLibrary = mutableRuntimeReferenceImageLibrary;
+        trackedImageManager.enabled = true;
     }
 
     IEnumerator WaitForUIActivation()
@@ -56,6 +66,7 @@ public class ImageTracking : MonoBehaviour
         trackedImageManager.trackedImagesChanged -= ImageChanged;
     }
 
+    //Tracks when a new image is recognized.
     private void ImageChanged(ARTrackedImagesChangedEventArgs eventArgs)
     {
         foreach(ARTrackedImage trackedImage in eventArgs.added)
@@ -75,6 +86,7 @@ public class ImageTracking : MonoBehaviour
         }
     }
 
+    //Method for changing the text in text view.
     public void changeText(string name)
     {
         foreach (var image in imageList)
@@ -87,6 +99,7 @@ public class ImageTracking : MonoBehaviour
         }
     }
 
+    //Update the tracked image.
     private void UpdateImage(ARTrackedImage trackedImage)
     {
         name = trackedImage.referenceImage.name;
