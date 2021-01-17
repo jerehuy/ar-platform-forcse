@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
     public AudioManager am;
     public TabGroup tabs;
     public ImageTracking it;
+    public Text mytext = null;
 
     private string lastDetectedLocation = "";
     private string lastLocationAudio = "";
@@ -36,6 +37,11 @@ public class UIManager : MonoBehaviour
         mainView.SetActive(true);
         currentTargetBox.SetActive(false);
         LoadingScene.mainViewActive = true;
+    }
+
+        public void emptyText()
+    {
+        mytext.text = "";
     }
 
     public void UpdateCurrentTargetText(string name, int method, string audio)
@@ -62,6 +68,9 @@ public class UIManager : MonoBehaviour
 
     public void BackToLocation()
     {
+
+        emptyText();
+        
         if (lastDetectedLocation != "")
         {
             UpdateCurrentTargetText(lastDetectedLocation , 1, lastLocationAudio);

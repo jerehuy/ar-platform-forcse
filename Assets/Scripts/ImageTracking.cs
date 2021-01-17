@@ -19,7 +19,6 @@ public class ImageTracking : MonoBehaviour
 
     MutableRuntimeReferenceImageLibrary mutableRuntimeReferenceImageLibrary;
     private ARTrackedImageManager trackedImageManager = null;
-    private Text currentImageText;
     string name = "";
     public List<ImageAR> imageList = new List<ImageAR>();
     public AudioManager am;
@@ -31,7 +30,17 @@ public class ImageTracking : MonoBehaviour
     {
         StartCoroutine(WaitForUIActivation());
 
+        //Get the imagelist to be used later. This list contains data about the images and audio.
         imageList = ResourceManager.GetImageTrackingObjects();
+
+        //Create and enable a runtimeImageLibrary so images can be added during runtime.
+        var lib = runtimeImageLibrary;
+        trackedImageManager.referenceLibrary = trackedImageManager.CreateRuntimeLibrary(lib);
+
+        mutableRuntimeReferenceImageLibrary = trackedImageManager.referenceLibrary as MutableRuntimeReferenceImageLibrary;
+
+        trackedImageManager.referenceLibrary = mutableRuntimeReferenceImageLibrary;
+        trackedImageManager.enabled = true;
     }
 
     IEnumerator WaitForUIActivation()
@@ -40,8 +49,6 @@ public class ImageTracking : MonoBehaviour
         {
             yield return null;
         }
-
-        currentImageText = GameObject.Find("CurrentImageName").GetComponent<Text>();
         
     }
 
@@ -60,6 +67,7 @@ public class ImageTracking : MonoBehaviour
         trackedImageManager.trackedImagesChanged -= ImageChanged;
     }
 
+    //Tracks when a new image is recognized.
     private void ImageChanged(ARTrackedImagesChangedEventArgs eventArgs)
     {
         foreach(ARTrackedImage trackedImage in eventArgs.added)
@@ -75,10 +83,11 @@ public class ImageTracking : MonoBehaviour
         }
         foreach (ARTrackedImage trackedImage in eventArgs.removed)
         {
-            currentImageText.text = "Tracking: None";
+
         }
     }
 
+    //Method for changing the text in text view.
     public void changeText(string name)
     {
         if (name == "")
@@ -99,18 +108,17 @@ public class ImageTracking : MonoBehaviour
         }
     }
 
+    //Update the tracked image.
     private void UpdateImage(ARTrackedImage trackedImage)
     {
         name = trackedImage.referenceImage.name;
         changeText(name);
-        currentImageText.text = "Tracked:" + name;
 
         foreach (var image in imageList)
         {
             if (image.TrackedImage == name)
             {
-                currentImageText.text = "Tracked:" + name;
-
+                am.LoadClip(image.Audio);
                 uiM.UpdateCurrentTargetText(image.Name, 2, "");
                 am.LoadClip(image.Audio);
                 break;
