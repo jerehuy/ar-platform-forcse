@@ -31,14 +31,14 @@
             "deactivation": "5"
         },
         {
-            "id": "4f43d80c-f928-477b-beae-0a7c25131906",
-            "name": "teboil",
-            "latitude": "61.50306522016441",
-            "longitude": "23.743128776550293",
+            "id": "4",
+            "name": "keinu",
+            "latitude": "61.502362",
+            "longitude": "23.732367",
             "audioName": "audio1.mp3",
-            "radius": "50",
+            "radius": "19",
             "activation": "1",
-            "deactivation": "10"
+            "deactivation": "1"
         }
     ]
 }

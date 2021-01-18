@@ -42,6 +42,7 @@ public class UIManager : MonoBehaviour
     public void emptyText()
     {
         mytext.text = "";
+        tabs.ClearNotification(2);
     }
 
     public void UpdateCurrentTargetText(string name, int method, string audio)

@@ -154,7 +154,6 @@ public class GPS : MonoBehaviour
                 StartCoroutine(Waiting("", corObject.Latitude, corObject.Longitude, corObject.Radius, corObject.Exit, "", corObject.ID, false));
             }
         }
-        //uiM.TestProcesses(processing.Count);
     }
 
     private IEnumerator Waiting(string name, float Lat, float Lon, float Radius, float Wait, string Audio, string ID, bool enter)
@@ -164,15 +163,15 @@ public class GPS : MonoBehaviour
             yield return new WaitForSeconds(1);
             Wait--;
         }
-        
+
+        uiM.emptyText();
+
         if (enter) {     
             if (Distance(Lat, Lon) <= Radius)
             {
                 lastVisitedID = ID;
                 am.LoadClip(Audio);
                 uiM.UpdateCurrentTargetText(name, 1, Audio);
-                it.changeText("");
-                tabs.ClearNotification(2);
             }
         }
         // Odota (poistumis)aika, jos poistut koordinaatista
