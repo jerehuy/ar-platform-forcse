@@ -7,19 +7,21 @@ public class ImageAR
 {
     //Variables
     private string id;
+    private string name;
     private string trackedImage;
     private string text;
     private string audio;
-    private string picture;
+    private string[] pictures;
 
     //Builder
-    public ImageAR (string pID, string pTrackedImage, string pText, string pAudio, string pPicture)
+    public ImageAR (string pID, string pName, string pTrackedImage, string pText, string pAudio, string[] pPictures)
     {
         id = pID;
+        name = pName;
         trackedImage = pTrackedImage;
         text = pText;
         audio = pAudio;
-        picture = pPicture;
+        pictures = pPictures;
     }
 
     //Accessors
@@ -29,6 +31,13 @@ public class ImageAR
     {
         get { return id; }
         set { id = value; }
+    }
+
+    //Name
+    public string Name
+    {
+        get { return name; }
+        set { name = value; }
     }
 
     public string TrackedImage
@@ -51,10 +60,10 @@ public class ImageAR
     }
 
     //Picture
-    public string Picture
+    public string[] Pictures
     {
-        get { return picture; }
-        set { picture = value; }
+        get { return pictures; }
+        set { pictures = value; }
     }
     
 }

@@ -17,83 +17,39 @@ public class ImageTracking : MonoBehaviour
     [SerializeField]
     XRReferenceImageLibrary runtimeImageLibrary;
 
-    [SerializeField]
-    XRReferenceImageLibrary secondLibrary = null;
-
-    [SerializeField]
-    private Button addPicture;
-
-    [SerializeField]
-    private Button changeLibraryButton;
-
     MutableRuntimeReferenceImageLibrary mutableRuntimeReferenceImageLibrary;
     private ARTrackedImageManager trackedImageManager = null;
-    private Text currentImageText;
-    private Text previousImageText;
-    private Button captureImage;
     string name = "";
-    int counter = 0;
-    int buttonCounter = 0;
-    int pictureCounter = 0;
-
-    /* 
-    * Method for changing the referenceImageLibrary.
-    * This method creates a runtime referenceImageLibrary, and changes to it.
-    * If button is pressed again, this method does nothing.
-    */
-    public string changeLibrary()
-    {
-        var lib = secondLibrary;
-        trackedImageManager.referenceLibrary = trackedImageManager.CreateRuntimeLibrary(lib);
-        trackedImageManager.enabled = true;
-        previousImageText.text = "Library cleared";
-        counter = 0;
-        pictureCounter = 0;
-        runtimeImageLibrary = null;
-        mutableRuntimeReferenceImageLibrary = null;
-        string empty = "";
-        return empty;
-    }
-
-    /* 
-    * Method for taking and adding pictures to runtime referenceImageLibrary.
-    * This method creates a picture, and adds it toruntime referenceImageLibrary.
-    */
-    private IEnumerator CaptureImage()
-    {
-
-        pictureCounter++;
-        string PictureName = "Picture: " + pictureCounter;
-
-        yield return new WaitForEndOfFrame();
-
-        var texture = ScreenCapture.CaptureScreenshotAsTexture();
-
-        var texture2d = texture as Texture2D;
-
-        previousImageText.text = "Image Taken";
-
-        mutableRuntimeReferenceImageLibrary = trackedImageManager.referenceLibrary as MutableRuntimeReferenceImageLibrary;
-
-        Unity.Jobs.JobHandle jobHandle = mutableRuntimeReferenceImageLibrary.ScheduleAddImageJob(texture2d, PictureName, 0.2f);
-        jobHandle.Complete();
-
-        previousImageText.text = "Lib count: " + mutableRuntimeReferenceImageLibrary.count;
-        currentImageText.text = "Texture count: " + mutableRuntimeReferenceImageLibrary.supportedTextureFormatCount;
-
-        trackedImageManager.referenceLibrary = mutableRuntimeReferenceImageLibrary;
-        trackedImageManager.enabled = true;
-
-    }
+    public List<ImageAR> imageList = new List<ImageAR>();
+    public AudioManager am;
+    public UIManager uiM;
+    public TabGroup tabs;
+    public Text mytext = null;
 
     private void Start()
     {
-        currentImageText = GameObject.Find("CurrentImageName").GetComponent<Text>();
-        previousImageText = GameObject.Find("PrevImageName").GetComponent<Text>();
+        StartCoroutine(WaitForUIActivation());
 
-        addPicture.onClick.AddListener(() => StartCoroutine(CaptureImage()));
+        //Get the imagelist to be used later. This list contains data about the images and audio.
+        imageList = ResourceManager.GetImageTrackingObjects();
 
-        changeLibraryButton.onClick.AddListener(() => StartCoroutine(changeLibrary()));
+        //Create and enable a runtimeImageLibrary so images can be added during runtime.
+        var lib = runtimeImageLibrary;
+        trackedImageManager.referenceLibrary = trackedImageManager.CreateRuntimeLibrary(lib);
+
+        mutableRuntimeReferenceImageLibrary = trackedImageManager.referenceLibrary as MutableRuntimeReferenceImageLibrary;
+
+        trackedImageManager.referenceLibrary = mutableRuntimeReferenceImageLibrary;
+        trackedImageManager.enabled = true;
+    }
+
+    IEnumerator WaitForUIActivation()
+    {
+        while (!LoadingScene.mainViewActive)
+        {
+            yield return null;
+        }
+        
     }
 
     private void Awake()
@@ -111,6 +67,7 @@ public class ImageTracking : MonoBehaviour
         trackedImageManager.trackedImagesChanged -= ImageChanged;
     }
 
+    //Tracks when a new image is recognized.
     private void ImageChanged(ARTrackedImagesChangedEventArgs eventArgs)
     {
         foreach(ARTrackedImage trackedImage in eventArgs.added)
@@ -121,22 +78,50 @@ public class ImageTracking : MonoBehaviour
         {
             if (trackedImage.referenceImage.name != name)
             {
-                counter++;
                 UpdateImage(trackedImage);
             }
         }
         foreach (ARTrackedImage trackedImage in eventArgs.removed)
         {
-            currentImageText.text = "Tracking: None";
+
         }
     }
 
+    //Method for changing the text in text view.
+    public void changeText(string name)
+    {
+        if (name == "")
+        {
+            uiM.emptyText();
+        }
+        else
+        {
+            foreach (var image in imageList)
+            {
+                if (image.TrackedImage == name && mytext.text != image.Text)
+                {
+                    mytext.text = image.Text;
+                    tabs.Notify(2);
+                    break;
+                }
+            }
+        }
+    }
+
+    //Update the tracked image.
     private void UpdateImage(ARTrackedImage trackedImage)
     {
-
         name = trackedImage.referenceImage.name;
-        currentImageText.text = "Tracked:" + name;
-        previousImageText.text = "Counter: " + counter;
+        changeText(name);
 
+        foreach (var image in imageList)
+        {
+            if (image.TrackedImage == name)
+            {
+                uiM.UpdateCurrentTargetText(image.Name, 2, "");
+                am.LoadClip(image.Audio);
+                break;
+            }
+        }
     }
 }

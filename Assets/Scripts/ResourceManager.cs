@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Globalization;
+using System.IO;
 
 public static class ResourceManager
 {
@@ -10,6 +11,7 @@ public static class ResourceManager
   private class GPSData
   {
     public string id = "";
+    public string name = "";
     public string latitude = "";
     public string longitude = "";
     public string audioName = "";
@@ -24,10 +26,11 @@ public static class ResourceManager
   private class ImageData
   {
     public string id = "";
+    public string name = "";
     public string trackedImageName = "";
     public string text = "";
     public string audioName = "";
-    public string pictureName = "";
+    public string[] contentImageNames;
   }
 
   public static List<Coords> GetGPSObjects() {
@@ -41,38 +44,38 @@ public static class ResourceManager
     foreach (GPSData gps in gpsData) {
       
       string newId = gps.id;
+      string newName = gps.name;
       float newLatitude = float.Parse(gps.latitude, format);
       float newLongitude = float.Parse(gps.longitude, format);
-      string newAudio = gps.audioName;
+      string newAudio = Path.GetFileNameWithoutExtension(gps.audioName);
       float newRadius = float.Parse(gps.radius, format);
       float newActivation = float.Parse(gps.activation, format);
       float newDeactivation = float.Parse(gps.deactivation, format);
 
-      coordsList.Add(new Coords(newId, newLatitude, newLongitude, newAudio, newRadius /*,newActivation, newDeactivation */));
+      coordsList.Add(new Coords(newId, newName, newLatitude, newLongitude, newAudio, newRadius ,newActivation/*, newDeactivation */));
       //Debug.Log("GPS(" + newId + ", " + newLatitude + ", " + newLongitude + ", " + newAudio + ", " + newRadius + ", " + newActivation + ", " + newDeactivation + ")");
     }
     return coordsList;
   }
 
-  public static bool  GetImageTrackingObjects() {
-        //List<ImageAR>
+  public static List<ImageAR>  GetImageTrackingObjects() {
 
         string data = Resources.Load<TextAsset>("image_data").ToString();
     ImageData[] imageData = JsonHelper.FromJson<ImageData>(data);
-    
     List<ImageAR> imagesList = new List<ImageAR>();
     foreach (ImageData image in imageData) {
       
       string newId = image.id;
-      string newTrackedImage = image.trackedImageName;
+      string newName = image.name;
+      string newTrackedImage = Path.GetFileNameWithoutExtension(image.trackedImageName);
       string newText = image.text;
-      string newAudio = image.audioName;
-      string newPicture = image.pictureName;
+      string newAudio = Path.GetFileNameWithoutExtension(image.audioName);
+      string[] newContentImageNames = image.contentImageNames;
 
-      imagesList.Add(new ImageAR(newId, newTrackedImage, newText, newAudio, newPicture));
+      imagesList.Add(new ImageAR(newId, newName, newTrackedImage, newText, newAudio, newContentImageNames));
       //Debug.Log("ImageAR(" + newId + ", " + newTrackedImage + ", " + newText + ", " + newAudio + ", " + newPicture + ")");
     }
 
-    return true; //List<ImageAR>
+    return imagesList;
   }
 }

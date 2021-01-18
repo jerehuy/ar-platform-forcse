@@ -1,7 +1,6 @@
-﻿/*
+/*
     Arttu Lehtola
 */
-
 
 using System;
 using System.Collections;
@@ -20,7 +19,15 @@ public class GPS : MonoBehaviour
     LocationService palvelin = Input.location;
     // Luodaan testilista olioille
     public List<Coords> CoordsList = new List<Coords>();
+    public List<string> processing = new List<string>();
     public bool flag = false;
+
+    public AudioManager am;
+    public UIManager uiM;
+    public ImageTracking it;
+    public TabGroup tabs;
+
+    private string lastVisitedID = "";
 
     // Start is called before the first frame update
     void Start()
@@ -29,14 +36,16 @@ public class GPS : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         StartCoroutine(StartLocationService());
 
-        //ResourceManager.GetGPSObjects();
+        // Haetaan oliolista
+        CoordsList = ResourceManager.GetGPSObjects();
+
     }
 
     private IEnumerator StartLocationService()
     {
         if (!Input.location.isEnabledByUser)
         {
-            UnityEngine.Debug.Log("GPS has not been enabled by the user");
+            //UnityEngine.Debug.Log("GPS has not been enabled by the user");
             status += "GPS has not been enabled by the user\n";
             yield break;
         }
@@ -51,14 +60,14 @@ public class GPS : MonoBehaviour
 
         if (maxWait <= 0)
         {
-            UnityEngine.Debug.Log("Timeout");
+            //UnityEngine.Debug.Log("Timeout");
             status = "Timeout\n";
             yield break;
         }
 
         if (palvelin.status == LocationServiceStatus.Failed)
         {
-            UnityEngine.Debug.Log("Unable to determine device's location");
+            //UnityEngine.Debug.Log("Unable to determine device's location");
             status = "Unable to determine device's location\n";
             yield break;
         }
@@ -101,70 +110,112 @@ public class GPS : MonoBehaviour
                     Math.Sin(lonDe / 2) * Math.Sin(lonDe / 2);
         double havC = 2 * Math.Asin(Math.Min(1, Math.Sqrt(havA)));
         // Palautetaan etäisyys (metreinä)
-        UnityEngine.Debug.Log("("+Lat+"|"+Lon+") PALAUTUS: " + (havR * havC));
+        //UnityEngine.Debug.Log("(" + Lat + "|" + Lon + ") PALAUTUS: " + (havR * havC));
         return (havR * havC);
     }
 
-    //IEnumerable<Coords> CoordsList
-    
     void Check()
-    
     {
-        /*
         foreach (var corObject in CoordsList)
         {
             double distance = Distance(corObject.Latitude, corObject.Longitude);
+            bool process = true;
+            //int ccp = 0;
 
-            if (distance != 0 && distance <= corObject.Radius)
+            if (Distance(corObject.Latitude, corObject.Longitude) != 0
+                && Distance(corObject.Latitude, corObject.Longitude) <= corObject.Radius)
             {
-                // Nappaamme oliosta halutun odotusajan (vakiona 5 sekuntia)
-                int wait = corObject.Wait;
-                while (wait > 0)
+                // Tarkistetaan, että kyseisellä koordinaatitunnuksella ei ole prosessia jo käynnissä
+                foreach (var corID in processing)
                 {
-                    yield return new WaitForSeconds(1);
-                    wait--;
-                }
-                
-                // Tarkistus vielä odotuksen jälkeen, että ollaanko vielä piirin sisällä
-                if (Distance(corObject.Latitude, corObject.Longitude) <= corObject.Radius) 
-                {
-                    AudioSource audio = gameObject.AddComponent<AudioSource>();
-                    audio.PlayOneShot((AudioClip)Resources.Load(corObject.Audio));
-                    
-                    //flag = true;
+                    if (corID.Equals(corObject.ID))
+                    {
+                        process = false;
+                    }
                 }
 
-                
+                //(concurrent processes = ccp)
+                // jos prosesseja on useampi, niin vältä konflikti
+                /* Tämä ei ole optimaali ratkaisu 
+                if (ccp > 1)
+                {
+                    process = false;
+                }*/
+
+                // Tallennetaan prosessoitavan koordinaatin id listaan
+                if (process)
+                {
+                    processing.Add(corObject.ID);
+                    StartCoroutine(Waiting(corObject.Name, corObject.Latitude, corObject.Longitude, corObject.Radius, corObject.Wait, corObject.Audio, corObject.ID, true));
+                    //ccp = processing.Count;
+                }
             }
-            
+            else if (corObject.ID == lastVisitedID && distance > corObject.Radius && processing.Count > 0) {
+                StartCoroutine(Waiting("", corObject.Latitude, corObject.Longitude, corObject.Radius, corObject.Exit, "", corObject.ID, false));
+            }
         }
-       
-        */
     }
-     
+
+    private IEnumerator Waiting(string name, float Lat, float Lon, float Radius, float Wait, string Audio, string ID, bool enter)
+    {
+        while (Wait > 0)
+        {
+            yield return new WaitForSeconds(1);
+            Wait--;
+        }
+
+        uiM.emptyText();
+
+        if (enter) {     
+            if (Distance(Lat, Lon) <= Radius)
+            {
+                lastVisitedID = ID;
+                am.LoadClip(Audio);
+                uiM.UpdateCurrentTargetText(name, 1, Audio);
+            }
+        }
+        // Odota (poistumis)aika, jos poistut koordinaatista
+        else {
+            if (Distance(Lat, Lon) > Radius)
+            {
+                // Suoritettuamme prosessin poistamme sen listalta
+                int ind = -1;
+                foreach (var corID in processing)
+                {
+                    ind++;
+                    if (corID == ID)
+                    {
+                        processing.RemoveAt(ind);
+                    }
+                }
+
+                if (processing.Count == 0)
+                {
+                    am.ClearClip();
+                    uiM.HideCurrentTarget();
+                }
+            }
+        }
+    }
 
     // Update is called once per frame
     void Update()
     {
-        
+
         // Päivitetään sijaintitiedot
         Location();
         // Tarkista koordinaattien etäisyys
         Check();
-        
-        
 
         // S-marketin edustan koordinaatit (syötä tähän mitkä tahansa haluamasi koordinaatit)
-        if (flag == false) {
+        if (flag == false)
+        {
             status = /*"Etäisyys: " + distance.ToString() + " meters.\n" +*/ "Aikaleima: " + time;
         }
         else
         {
             status = "Pääsimme perille!";
         }
-        
 
-        
-        
     }
 }

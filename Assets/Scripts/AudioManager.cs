@@ -8,7 +8,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(AudioSource))]
 public class AudioManager : MonoBehaviour
 {
-    public AudioClip[] audioClips;
+    private AudioClip audioClip = null;
     private AudioSource source;
 
     public Text clipTimeText;
@@ -18,13 +18,23 @@ public class AudioManager : MonoBehaviour
     private int seconds;
     private int minutes;
 
-    private GameObject playButton;
-    private GameObject pauseButton;
+    public GameObject playButton;
+    public GameObject pauseButton;
+
+    public TabGroup tabs;
+    private int audioControlButton = 0;
 
     void Start ()
     {
-        playButton = GameObject.Find("PlayButton");
-        pauseButton = GameObject.Find("PauseButton");
+        StartCoroutine(WaitForUIActivation());
+    }
+
+    IEnumerator WaitForUIActivation()
+    {
+        while (!LoadingScene.mainViewActive)
+        {
+            yield return null;
+        }
 
         pauseButton.SetActive(false);
 
@@ -33,19 +43,18 @@ public class AudioManager : MonoBehaviour
 
     public void PlayAudio()
     {
-        /*if(source.isPlaying)
+        if (audioClip != null)
         {
-            return;
-        }*/
+            //source.clip = audioClip;
+            //fullLength = (int)source.clip.length;
+            source.Play();
 
-        source.clip = audioClips[0];
-        fullLength = (int)source.clip.length;
-        source.Play();
+            tabs.ClearNotification(audioControlButton);
 
-        StartCoroutine("WaitForAudioEnd");
+            SwapButtons(false);
 
-        playButton.SetActive(false);
-        pauseButton.SetActive(true);
+            StartCoroutine("WaitForAudioEnd");
+        }
     }
 
     IEnumerator WaitForAudioEnd()
@@ -57,8 +66,7 @@ public class AudioManager : MonoBehaviour
             yield return null;
         }
 
-        pauseButton.SetActive(false);
-        playButton.SetActive(true);
+        SwapButtons(true);
     }
 
     public void PauseAudio()
@@ -66,8 +74,7 @@ public class AudioManager : MonoBehaviour
         source.Pause();
         StopCoroutine("WaitForAudioEnd");
 
-        pauseButton.SetActive(false);
-        playButton.SetActive(true);
+        SwapButtons(true);
     }
 
     public void ResetTrack()
@@ -83,5 +90,56 @@ public class AudioManager : MonoBehaviour
         seconds = playTime % 60;
         minutes = (playTime / 60) % 60;
         clipTimeText.text = minutes + ":" + seconds.ToString("D2") + "/" + ((fullLength / 60) % 60 + ":" + (fullLength % 60).ToString("D2"));
+    }
+
+    public void LoadClip(string c)
+    {
+        if (audioClip == null || audioClip.name != c)
+        {
+            if (c != "")
+            {
+                audioClip = Resources.Load(c) as AudioClip;
+                source.clip = audioClip;
+
+                fullLength = (int)source.clip.length;
+                playTime = 0;
+                ShowPlayTime();
+                tabs.Notify(audioControlButton);
+            }
+            else 
+            {
+                ClearClip();
+            }
+        }
+    }
+
+    public void ClearClip()
+    {
+        if (pauseButton.active)
+        {
+            SwapButtons(true);
+        }
+
+        audioClip = null;
+        source.clip = null;
+
+        fullLength = 0;
+        playTime = 0;
+        ShowPlayTime();
+
+        tabs.ClearNotification(audioControlButton);
+    }
+
+    public void SwapButtons(bool pause)
+    {
+        if(pause)
+        {
+            playButton.SetActive(true);
+            pauseButton.SetActive(false);
+        }
+        else {
+            pauseButton.SetActive(true);
+            playButton.SetActive(false);
+        }
     }
 }

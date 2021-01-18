@@ -10,6 +10,7 @@ public class TabButton : MonoBehaviour, IPointerClickHandler
     public TabGroup tabGroup;
 
     public Image background;
+    public bool notificationActive = false;
 
     public void OnPointerClick(PointerEventData eventData)
     {
