@@ -37,7 +37,7 @@ public class AppManager : MonoBehaviour
             yield return null;
         }
 //UnityEngine.Debug.Log("päästiin läpi");
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
 
         LoadingScene.loadingReady = true;
         loadingScreen.gameObject.SetActive(false);

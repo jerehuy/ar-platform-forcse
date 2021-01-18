@@ -1,38 +1,5 @@
 {
     "data": [
-        {
-            "id": "1",
-            "name": "test",
-            "trackedImageName": "image1",
-            "text": "Test description",
-            "contentImageNames": [
-                "duck_2.jpg",
-                "duck_3.jpg"
-            ],
-            "audioName": "audio1"
-        },
-        {
-            "id": "2",
-            "name": "kissakirja",
-            "trackedImageName": "kissakirja",
-            "text": "This is a book about how to live like your cat.",
-            "contentImageNames": [],
-            "audioName": "audio1"
-        },
-        {
-            "id": "3",
-            "name": "island",
-            "trackedImageName": "island",
-            "text": "This is a magic island",
-            "contentImageNames": [],
-            "audioName": "audio1 kopio.mp3"
-        },
-        {
-            "id": "c240875b-4127-496a-89b3-60019be768a4",
-            "name": "TEK_kuva",
-            "trackedImageName": "TEK_kuva.jpg",
-            "text": "This is a picture from academic competition.",
-            "contentImageNames": []
-        }
+
     ]
 }
