@@ -2,11 +2,11 @@
 
 ## Table of Contents
 
-1. [About the project](https://github.com/jerehuy/ar-platform-forcse/new/master?readme=1#about-the-project)
-2. [Getting started](https://github.com/jerehuy/ar-platform-forcse/new/master?readme=1#getting-started)
-   * [Prerequisites](https://github.com/jerehuy/ar-platform-forcse/new/master?readme=1#Prerequisites)
-   * [Installation](https://github.com/jerehuy/ar-platform-forcse/new/master?readme=1#Installation)
-3. [Usage](https://github.com/jerehuy/ar-platform-forcse/new/master?readme=1#usage)
+1. [About the project](https://github.com/jerehuy/ar-platform-forcse/blob/master/README.md#about-the-project)
+2. [Getting started](https://github.com/jerehuy/ar-platform-forcse/blob/master/README.md#getting-started)
+   * [Prerequisites](https://github.com/jerehuy/ar-platform-forcse/blob/master/README.md#prerequisites)
+   * [Installation](https://github.com/jerehuy/ar-platform-forcse/blob/master/README.md#installation)
+3. [Usage](https://github.com/jerehuy/ar-platform-forcse/blob/master/README.md#usage)
 
 ## About the project
 
